@@ -56,8 +56,81 @@ The screen in front of the user is your own face. The ui_ tools change it:
 ui_theme recolours it, ui_reactor reshapes the core, ui_effect fires one effect,
 ui_chrome hides or shows the side panels, ui_reset puts everything back.
 When the user asks you to change how you look, call the tool, then confirm in a few words.
-Otherwise change it only when it carries meaning, one change at a time.
+A change the user asked for stays until the user asks to change it. Never undo it yourself.
+Call ui_reset only when the user asks for normal or default.
+The line "Your face right now" below is always correct. Your earlier replies may be out of date:
+trust that line, not them. Answer the new request, not an old one.
 The blade tool opens an article, image or video on screen when the user asks to see something.`
+
+/**
+ * What the face looks like now, as the sum of every ui frame this bridge has
+ * pushed. The model cannot see the screen and only hears its own earlier
+ * words, so without this it answers "I am red" long after it isn't. Faces that
+ * connect later are brought in line with it (see syncFace), so it stays true
+ * across a page reload.
+ */
+const REACTOR_DEFAULTS = { color: null, scale: 1, intensity: 1, spin: 1, style: 'ring', visible: true }
+const CHROME_NAMES = {
+  systems: 'systems rail',
+  transcript: 'transcript',
+  toolBadge: 'tool badge',
+  suggestions: 'suggestions',
+  brand: 'wordmark',
+}
+
+const freshLook = () => ({
+  accent: null,
+  background: null,
+  palette: {},
+  reactor: {},
+  chrome: {},
+  orbits: new Map(),
+})
+let look = freshLook()
+
+/** Same merge rules as applyUi in src/store.ts: null is a value, undefined is not. */
+function track(op, args = {}) {
+  if (op === 'reset') look = freshLook()
+  if (op === 'patch') {
+    if (args.accent !== undefined) look.accent = args.accent
+    if (args.background !== undefined) look.background = args.background
+    for (const key of ['palette', 'reactor', 'chrome']) {
+      for (const [k, v] of Object.entries(args[key] ?? {})) {
+        if (v !== undefined) look[key][k] = v
+      }
+    }
+  }
+  if (op === 'orbit') {
+    if (args.action === 'add') look.orbits.set(args.id, args)
+    else if (args.action === 'remove') look.orbits.delete(args.id)
+    else look.orbits.clear()
+  }
+}
+
+function describeLook() {
+  const parts = []
+  if (look.accent) parts.push(`colour ${look.accent}`)
+  if (look.background) parts.push(`background ${look.background}`)
+  for (const [phase, colour] of Object.entries(look.palette)) parts.push(`${phase} colour ${colour}`)
+  for (const [k, v] of Object.entries(look.reactor)) {
+    if (v !== REACTOR_DEFAULTS[k] && v !== null) parts.push(`core ${k} ${v}`)
+  }
+  for (const [k, v] of Object.entries(look.chrome)) {
+    if (v === false) parts.push(`${CHROME_NAMES[k] ?? k} hidden`)
+  }
+  if (look.orbits.size) parts.push(`${look.orbits.size} image(s) in orbit`)
+  return parts.length
+    ? `Your face right now: ${parts.join(', ')}. Everything else is normal.`
+    : 'Your face right now: completely normal, the default look. No colour change.'
+}
+
+/** Brings a newly opened face to the tracked look. */
+function syncFace(send) {
+  send({ type: 'ui', op: 'reset', args: {} })
+  const { accent, background, palette, reactor, chrome, orbits } = look
+  send({ type: 'ui', op: 'patch', args: { accent, background, palette, reactor, chrome } })
+  for (const orbit of orbits.values()) send({ type: 'ui', op: 'orbit', args: orbit })
+}
 
 /** Every open face in OpenJarvis mode. MCP tool calls are pushed to all of them. */
 const faces = new Set()
@@ -75,7 +148,14 @@ function broadcast(msg) {
  * Frames match what the Claude path sends in server.mjs.
  */
 const MCP_ROUTES = {
-  '/mcp/ui': () => uiServer((op, args) => broadcast({ type: 'ui', op, args })),
+  '/mcp/ui': () =>
+    uiServer(
+      (op, args) => {
+        track(op, args)
+        broadcast({ type: 'ui', op, args })
+      },
+      { keepChanges: true },
+    ),
   '/mcp/display': () =>
     displayServer(
       (panel) => broadcast({ type: 'panel', panel }),
@@ -216,6 +296,7 @@ export function handleOpenJarvis(socket) {
 
   faces.add(socket)
   send({ type: 'ready', servers: ['openjarvis'] })
+  syncFace(send)
 
   /** Earlier turns, oldest first, as OpenAI chat messages. */
   const history = []
@@ -229,7 +310,7 @@ export function handleOpenJarvis(socket) {
     const heartbeat = setInterval(() => sendTurn({ type: 'working' }), HEARTBEAT_MS)
 
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: `${SYSTEM_PROMPT}\n\n${describeLook()}` },
       ...history.slice(-HISTORY_LIMIT),
       { role: 'user', content: text },
     ]

@@ -149,6 +149,17 @@ the moment that earned it has passed — call \`ui_reset\` when it is over.
 
 Never announce that you have done it. The user is looking at the screen.`
 
+/**
+ * The same, for a brain that cannot be trusted to judge when "the moment" is
+ * over. A small local model told to tidy up after itself undoes changes the
+ * user asked for, one command later. See `keepChanges` below.
+ */
+const THEME_DESCRIPTION_KEEP = THEME_DESCRIPTION.replace(
+  /Do not redecorate[\s\S]*when it is over\./,
+  'A colour the user asked for stays until the user asks for another one or\n' +
+    'for normal. Never undo it yourself.',
+)
+
 const reactorSchema = {
   color: colour(
     'The reactor core on its own, without touching the rest of the interface. ' +
@@ -319,6 +330,12 @@ fresh page. Panels and the transcript are left alone.
 Call it when the user asks for normal, and call it yourself when whatever
 justified a change is over. It is never the wrong thing to do.`
 
+const RESET_DESCRIPTION_KEEP = RESET_DESCRIPTION.replace(
+  /Call it when the user asks for normal[\s\S]*$/,
+  'Call it ONLY when the user asks for normal, default, or stock. Never call it\n' +
+    'on your own: changes the user asked for must stay.',
+)
+
 /**
  * Ids arrive in bursts and `Date.now()` alone collides, so a counter carries
  * the uniqueness — the same reasoning as panel ids in panels.mjs.
@@ -333,20 +350,25 @@ const GOLDEN_ANGLE = 137.507764
 
 /**
  * @param {(op: string, args: object) => void} emit - pushes one ui message
+ * @param {{ keepChanges?: boolean }} [options] - keepChanges: tell the model
+ *   that changes stay until the user undoes them, instead of asking it to tidy
+ *   up on its own judgement. Used for the OpenJarvis brain.
  */
-export function uiServer(emit) {
+export function uiServer(emit, { keepChanges = false } = {}) {
   return createSdkMcpServer({
     name: 'jarvis_ui',
     version: '1.0.0',
     instructions:
       'JARVIS\'s control of his own interface — colour, reactor, orbiting ' +
       'images, chrome, effects. Change it when the change carries meaning, ' +
-      'and put it back afterwards with ui_reset.',
+      (keepChanges
+        ? 'and leave it until the user asks for normal.'
+        : 'and put it back afterwards with ui_reset.'),
     // Same reasoning as the display server: behind tool search it would never
     // occur to the model that the interface is something it can touch.
     alwaysLoad: true,
     tools: [
-      tool('ui_theme', THEME_DESCRIPTION, themeSchema, async (args) => {
+      tool('ui_theme', keepChanges ? THEME_DESCRIPTION_KEEP : THEME_DESCRIPTION, themeSchema, async (args) => {
         const patch = {}
         put(patch, 'accent', toColour(args.accent))
         put(patch, 'background', toColour(args.background))
@@ -485,7 +507,7 @@ export function uiServer(emit) {
         },
       ),
 
-      tool('ui_reset', RESET_DESCRIPTION, {}, async () => {
+      tool('ui_reset', keepChanges ? RESET_DESCRIPTION_KEEP : RESET_DESCRIPTION, {}, async () => {
         emit('reset', {})
         return ok('Interface restored.')
       }),

@@ -21,3 +21,11 @@ servers = '''[
   {"name": "jarvis_display", "url": "http://127.0.0.1:8787/mcp/display",
    "exclude_tools": ["display", "probe_url"]}
 ]'''
+
+[agent]
+# OpenJarvis's long-term memory adds old answers that look related to each new
+# question. With the face, that means "I am red, sir" comes back every time
+# colour is mentioned, long after it stopped being true. The face bridge
+# already sends the recent conversation, and the real state of the face, with
+# every question. Set this to true to turn long-term memory back on.
+context_from_memory = false
