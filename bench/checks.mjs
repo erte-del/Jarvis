@@ -26,10 +26,45 @@ export const wordCount = (text) => (text.match(/\S+/g) ?? []).length
 /** Markdown is read aloud as symbols, so the face asks for plain speech. */
 export const looksSpoken = (text) => !/(\*\*|^#{1,6}\s|^\s*[-*]\s|^\s*\d+\.\s|`)/m.test(text)
 
-/** The final sentence, where an answer that explains itself states its result. */
-function lastSentence(text) {
+/**
+ * Where an answer that explains itself states its result: the first sentence
+ * ("Thirty-three dollars, sir. Thirty off, plus three in tax.") or the last
+ * ("Thirty off leaves thirty, plus tax. So you pay thirty-three."). Checking
+ * only the last sentence failed right answers given first.
+ */
+function answerSentences(text) {
   const parts = text.trim().split(/(?<=[.!?])\s+/).filter(Boolean)
-  return parts.at(-1) ?? ''
+  return parts.length > 1 ? `${parts[0]} ${parts.at(-1)}` : text
+}
+
+/**
+ * For a question with a closed set of answers (the four directions, the days
+ * of the week), the one mentioned last. Working that ends "…left to face
+ * east. You are now facing west." concludes west, however many times east
+ * came up on the way.
+ */
+function lastChoice(text, choices) {
+  let best = null
+  let at = -1
+  for (const c of choices) {
+    for (const m of text.matchAll(new RegExp(`\\b${escape(c)}\\b`, 'gi'))) {
+      if (m.index > at) {
+        at = m.index
+        best = c
+      }
+    }
+  }
+  return best
+}
+
+/**
+ * Numbers the question itself contains ("the novel 1984", "leaves at 3:40").
+ * Repeating those as digits is not a style problem; working out new ones is.
+ */
+function withoutQuestionNumbers(text, question) {
+  let out = text
+  for (const n of question.match(/\d[\d:.,]*\d|\d/g) ?? []) out = out.split(n).join(' ')
+  return out
 }
 
 const get = (obj, path) => path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj)
@@ -114,12 +149,16 @@ export function grade(task, result) {
 
   if (result.error) reasons.push(`error: ${result.error}`)
   if (task.expect) {
-    const where = task.check === 'last_sentence' ? lastSentence(text) : text
+    const where = task.check === 'answer_sentence' ? answerSentences(text) : text
     const ok = task.letters
       ? task.expect.some((w) => where.toLowerCase().replace(/[^a-z]/g, '').includes(w))
       : task.expect.some((w) => contains(where, w))
-    const what = task.check === 'last_sentence' ? 'the last sentence to say one of' : 'one of'
+    const what = task.check === 'answer_sentence' ? 'the first or last sentence to say one of' : 'one of'
     if (!ok) reasons.push(`expected ${what}: ${task.expect.slice(0, 3).join(', ')}`)
+    if (ok && task.choices) {
+      const said = lastChoice(text, task.choices)
+      if (said && !task.expect.includes(said)) reasons.push(`concluded ${said}, expected ${task.expect[0]}`)
+    }
   }
   for (const want of [task.expect_ui ?? []].flat()) {
     if (!frameMatches(ui, want)) reasons.push(`expected face change: ${want.op}${want.path ? ` ${want.path}` : ''}`)
@@ -134,7 +173,8 @@ export function grade(task, result) {
 
   const styleIssues = []
   if (text) {
-    if (/\d/.test(text)) styleIssues.push('digits')
+    const question = task.steps?.at(-1) ?? task.ask ?? ''
+    if (/\d/.test(withoutQuestionNumbers(text, question))) styleIssues.push('digits')
     if (FILLER.test(text)) styleIssues.push('filler')
     if (!looksSpoken(text)) styleIssues.push('markdown')
     const limit = task.style_max_words ?? 30

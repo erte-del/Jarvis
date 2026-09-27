@@ -77,6 +77,17 @@ const name = (s) => `${s.brain} · ${s.model}`
 const cell = (text) => String(text ?? '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim()
 const hasIssue = (r, key) => r.styleIssues.some((i) => i.startsWith(key))
 
+/**
+ * An answer for a table cell. Escaped, so an answer written in markdown shows
+ * its symbols instead of being rendered as formatting and looking like plain
+ * speech.
+ */
+function quote(text) {
+  if (!text) return '(no text)'
+  const trimmed = text.length > 160 ? `${text.slice(0, 157)}…` : text
+  return trimmed.replace(/[*_`#<>[\]]/g, '\\$&')
+}
+
 const categories = [...new Set(tasks.filter((t) => ids.includes(t.id)).map((t) => t.category))]
 
 // ---------------------------------------------------------------- report
@@ -133,7 +144,7 @@ row('Machine', ...sets.map((s) => cell(`${s.machine.cpu}, ${s.machine.memoryGB} 
 row('Date', ...sets.map((s) => s.date.slice(0, 16).replace('T', ' ')))
 lines.push('')
 
-lines.push('## Every question', '', 'The answer shown is from the first run. Problems are counted over all runs.', '')
+lines.push('## Every question', '', 'The answer shown is from the first run, plus a failing run when there is one. Problems are counted over all runs.', '')
 row('Question', ...sets.map(name))
 row('---', ...sets.map(() => '---'))
 for (const id of ids) {
@@ -146,12 +157,12 @@ for (const id of ids) {
       const r = rs[0]
       const mark = rs.every((x) => x.pass) ? 'PASS' : rs.some((x) => x.pass) ? 'SOME' : 'FAIL'
       const problems = [...new Set(rs.flatMap((x) => [...x.reasons, ...x.styleIssues.map((i) => `style: ${i}`)]))]
-      // Escaped, so an answer written in markdown shows its symbols here
-      // instead of being rendered as formatting and looking like plain speech.
-      const trimmed = r.text.length > 160 ? `${r.text.slice(0, 157)}…` : r.text
-      const answer = trimmed.replace(/[*_`#<>[\]]/g, '\\$&')
       const why = problems.length ? `<br>_${cell(problems.join('; '))}_` : ''
-      return cell(`**${mark}** · ${seconds(median(rs.map((x) => x.totalMs)))}<br>${answer || '(no text)'}${why}`)
+      // A SOME row shows a failing run too: the first run's answer alone would
+      // hide the one that failed, and the reader is told to read the answers.
+      const failed = r.pass ? rs.find((x) => !x.pass) : null
+      const also = failed ? `<br>Failed in run ${failed.run}: ${quote(failed.text)}` : ''
+      return cell(`**${mark}** · ${seconds(median(rs.map((x) => x.totalMs)))}<br>${quote(r.text)}${also}${why}`)
     }),
   )
 }
@@ -159,8 +170,8 @@ lines.push('')
 
 lines.push('## How to read this', '')
 lines.push(
-  '- **Correct** is an automatic check. Facts and sums must contain the right word; for answers that explain themselves, the last sentence must. Face tasks must send the right face change. Instructions like "one word only" must be followed. A FAIL can still be a right answer in words the check did not expect. Read the answers.',
-  '- **Style** checks what a listener would notice. Digits and symbols are written for reading, not speaking ("5:15" instead of "five fifteen"). Filler is phrases like "let me know if…". Short enough means 30 words unless the question needs more. Face changes nobody asked for include changing the core\'s shape when asked only to make it bigger.',
+  '- **Correct** is an automatic check. Facts and sums must contain the right word; for answers that explain themselves, the first or last sentence must. Face tasks must send the right face change. Instructions like "one word only" must be followed. A FAIL can still be a right answer in words the check did not expect. Read the answers.',
+  '- **Style** checks what a listener would notice. Digits are written for reading, not speaking ("5:15" instead of "five fifteen"); numbers the question itself contains, like the title 1984, do not count. Filler is phrases like "let me know if…". Short enough means 30 words unless the question needs more. Face changes nobody asked for include changing the core\'s shape when asked only to make it bigger.',
   '- **SOME** means the question passed in some runs and failed in others.',
   '- **Time to first word** is when the face could start to speak. The OpenJarvis agent sends its whole answer at once, so for it the first word and the full answer arrive together.',
   '- **Cost** for Claude is what the Claude Agent SDK reports. On a Claude subscription it comes out of the plan, not as a bill. The local model has no per-answer cost, only electricity.',

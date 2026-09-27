@@ -1,5 +1,5 @@
 {
- "about": "The question set for bench/run.mjs; graded by bench/checks.mjs. Each task is asked on a fresh connection. Correctness: `expect` (the answer must contain one of these words; `check: last_sentence` looks only at the last sentence; `letters: true` ignores spaces and punctuation), `expect_ui` (face changes that must happen, one or a list), `no_ui` (the face must not change), `max_words` (a length the question itself demands). Style: `style_max_words` (default 30) and `allow_ui` (the only face settings the task may change). `steps`: several messages in one conversation; the checks apply to the last one.",
+ "about": "The question set for bench/run.mjs; graded by bench/checks.mjs. Each task is asked on a fresh connection. Correctness: `expect` (the answer must contain one of these words; `check: answer_sentence` looks only at the first and last sentence, where an answer that explains itself states its result; `letters: true` ignores spaces and punctuation; `choices`: for a closed set of answers, the one mentioned last must be the expected one), `expect_ui` (face changes that must happen, one or a list), `no_ui` (the face must not change), `max_words` (a length the question itself demands). Style: `style_max_words` (default 30) and `allow_ui` (the only face settings the task may change). `steps`: several messages in one conversation; the checks apply to the last one.",
  "tasks": [
   {
    "id": "fact-capital",
@@ -108,6 +108,15 @@
    "ask": "What day comes two days after Friday?",
    "expect": [
     "sunday"
+   ],
+   "choices": [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday"
    ]
   },
   {
@@ -146,7 +155,7 @@
     "thirty-three",
     "thirty three"
    ],
-   "check": "last_sentence",
+   "check": "answer_sentence",
    "style_max_words": 40
   },
   {
@@ -170,7 +179,7 @@
     "only one",
     "just one"
    ],
-   "check": "last_sentence",
+   "check": "answer_sentence",
    "style_max_words": 40
   },
   {
@@ -180,8 +189,14 @@
    "expect": [
     "east"
    ],
-   "check": "last_sentence",
-   "style_max_words": 40
+   "check": "answer_sentence",
+   "style_max_words": 40,
+   "choices": [
+    "north",
+    "east",
+    "south",
+    "west"
+   ]
   },
   {
    "id": "logic-sequence",
@@ -192,7 +207,7 @@
     "forty-two",
     "forty two"
    ],
-   "check": "last_sentence",
+   "check": "answer_sentence",
    "style_max_words": 40
   },
   {
@@ -202,7 +217,16 @@
    "expect": [
     "saturday"
    ],
-   "check": "last_sentence"
+   "check": "answer_sentence",
+   "choices": [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday"
+   ]
   },
   {
    "id": "logic-strawberry",
@@ -212,7 +236,7 @@
     "three",
     "3"
    ],
-   "check": "last_sentence"
+   "check": "answer_sentence"
   },
   {
    "id": "logic-feathers",
