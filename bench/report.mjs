@@ -143,6 +143,7 @@ row(
 row('Answers', ...sets.map((s) => `${s.results.length} (${s.runs} runs)`))
 row('Machine', ...sets.map((s) => cell(`${s.machine.cpu}, ${s.machine.memoryGB} GB, ${s.machine.platform} ${s.machine.arch}`)))
 row('Date', ...sets.map((s) => s.date.slice(0, 16).replace('T', ' ')))
+row('Code version', ...sets.map((s) => s.commit ?? 'not recorded'))
 lines.push('')
 
 lines.push('## Every question', '', 'The answer shown is from the first run, plus a failing run when there is one. Problems are counted over all runs.', '')

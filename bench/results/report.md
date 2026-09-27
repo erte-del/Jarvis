@@ -42,6 +42,7 @@ Does it sound like JARVIS speaking? Scored separately from correctness.
 | Answers | 114 (3 runs) | 114 (3 runs) |
 | Machine | Apple M5, 24 GB, darwin arm64 | Apple M5, 24 GB, darwin arm64 |
 | Date | 2026-09-27 17:04 | 2026-09-27 17:30 |
+| Code version | not recorded | not recorded |
 
 ## Every question
 

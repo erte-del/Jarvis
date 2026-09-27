@@ -23,6 +23,7 @@ import { cpus, totalmem, platform, arch, release } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { performance } from 'node:perf_hooks'
+import { execSync } from 'node:child_process'
 import { grade, looksSpoken, wordCount } from './checks.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
@@ -201,7 +202,24 @@ async function runTask(task, meta) {
 }
 
 const meta = await describeBrain()
-console.log(`Brain: ${meta.brain} · model ${meta.model}${meta.agent ? ` · agent ${meta.agent}` : ''}`)
+
+// Which version of the code produced these results. A run started before a
+// `git pull` looks exactly like one started after it, except for this.
+try {
+  meta.commit = execSync('git rev-parse --short HEAD', { cwd: HERE }).toString().trim()
+  if (execSync(
+      // Lockfiles left out: npm and uv rewrite them on install without
+      // changing what runs.
+      "git status --porcelain -- ../face ../brain ../bench/*.mjs ../bench/questions.json ../config ':!../face/package-lock.json' ':!../brain/uv.lock'",
+      { cwd: HERE },
+    ).toString().trim()) {
+    meta.commit += ' (with local changes)'
+  }
+} catch {
+  meta.commit = 'unknown'
+}
+console.log(`Brain: ${meta.brain} · model ${meta.model}${meta.agent ? ` · agent ${meta.agent}` : ''} · code ${meta.commit}`)
+if (TAG) console.log(`Tag: ${TAG}`)
 console.log(`${tasks.length} tasks × ${RUNS} run(s)\n`)
 
 // The first request to a local model loads it into memory, which can take
