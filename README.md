@@ -30,7 +30,7 @@ You need three things running. Use three terminals.
    ```bash
    cd brain
    uv sync --extra server
-   uv run jarvis serve
+   uv run jarvis serve -e ollama -m qwen3:8b
    ```
 
    It listens on `http://127.0.0.1:8000`.
