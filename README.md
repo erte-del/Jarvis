@@ -88,6 +88,10 @@ The report grades saved answers again with the current checks.
 
    The Claude runs use your Claude plan.
 
+   To compare setups of one brain, give each run a name with `--tag`, for example
+   `node bench/run.mjs --runs 3 --tag thinking`. Each name gets its own column.
+   To let qwen think before it answers, start the brain with `OPENJARVIS_THINK=1` in front.
+
 3. Make the report:
 
    ```bash

@@ -29,7 +29,8 @@ function pickFiles() {
   }
   // Names end in an ISO date, so the last one per brain is the newest.
   const newest = new Map()
-  for (const n of names) newest.set(n.split('-')[0], join(DIR, n))
+  // Grouped by setup: the name before the date, e.g. "openjarvis-thinking".
+  for (const n of names) newest.set(n.replace(/-\d{4}-\d{2}-\d{2}-.*$/, ''), join(DIR, n))
   return [...newest.values()]
 }
 
@@ -73,7 +74,7 @@ const share = (rs, ok) => {
   const n = rs.filter(ok).length
   return `${n}/${rs.length} (${percent(n, rs.length)})`
 }
-const name = (s) => `${s.brain} · ${s.model}`
+const name = (s) => `${s.brain}${s.tag ? ` (${s.tag})` : ''} · ${s.model}`
 const cell = (text) => String(text ?? '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim()
 const hasIssue = (r, key) => r.styleIssues.some((i) => i.startsWith(key))
 
@@ -162,7 +163,13 @@ for (const id of ids) {
       // hide the one that failed, and the reader is told to read the answers.
       const failed = r.pass ? rs.find((x) => !x.pass) : null
       const also = failed ? `<br>Failed in run ${failed.run}: ${quote(failed.text)}` : ''
-      return cell(`**${mark}** · ${seconds(median(rs.map((x) => x.totalMs)))}<br>${quote(r.text)}${also}${why}`)
+      // For a failed face task, the tool calls behind it: what the model asked
+      // for and what the tool said back.
+      const shown = failed ?? (r.pass ? null : r)
+      const calls = shown?.calls?.length
+        ? `<br>Tool calls: ${shown.calls.map((c) => quote(`${c.name} ${JSON.stringify(c.args)} → ${c.reply}`)).join('; ')}`
+        : ''
+      return cell(`**${mark}** · ${seconds(median(rs.map((x) => x.totalMs)))}<br>${quote(r.text)}${also}${calls}${why}`)
     }),
   )
 }

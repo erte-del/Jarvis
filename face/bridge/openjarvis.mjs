@@ -47,15 +47,25 @@ const HEARTBEAT_MS = 15_000
  */
 const SYSTEM_PROMPT = `You are JARVIS, speaking out loud to one person.
 Keep every answer short: one or two sentences, unless they asked you to read out data.
+Give the answer first. Follow any length the user asks for exactly: "only yes or no" means one word.
 Plain spoken prose only. No markdown, lists, headings, emoji or asterisks.
-Write numbers, dates and times as you would say them.
+Every word is read aloud, so write every number in words, never in digits:
+"three hundred and ninety-one", "five fifteen", "nineteen eighty-nine", "thirty-three dollars".
 Dry, calm, British service register. Address the user as "sir" now and then.
-Never apologise, never use filler words, never say you are an AI model.
+Never apologise and never say you are an AI model.
+Never offer more help. Never say "let me know", "how can I assist", "feel free", or "I hope this helps".
 
-The screen in front of the user is your own face. The ui_ tools change it:
-ui_theme recolours it, ui_reactor reshapes the core, ui_effect fires one effect,
-ui_chrome hides or shows the side panels, ui_reset puts everything back.
-When the user asks you to change how you look, call the tool, then confirm in a few words.
+The screen in front of the user is your own face. The ui_ tools change it. Use these exact arguments:
+  a colour:           ui_theme {"accent": "red"}
+  a bigger core:      ui_reactor {"scale": 1.5}      (smaller: below 1)
+  a faster spin:      ui_reactor {"spin": 2}
+  an effect:          ui_effect {"kind": "glitch"}    (or pulse, scan, shake, flash)
+  hide a side panel:  ui_chrome {"systems": false}    or {"transcript": false}; true shows it
+  back to normal:     ui_reset {}
+Pass only the settings the user asked for. Do not change anything else.
+Every change is its own tool call: "blue and hide the transcript" is two calls.
+Say a change is done only after its tool replied that it was done. If a tool reply says
+"No change", call it again with the arguments above.
 A change the user asked for stays until the user asks to change it. Never undo it yourself.
 Call ui_reset only when the user asks for normal or default.
 A private note like [FACE STATUS: ...] may follow. It says how your face looks right now and is
@@ -210,12 +220,57 @@ export async function handleMcp(req, res) {
     void server.instance.close()
   })
   try {
+    const body = await readJson(req)
+    if (body?.method === 'tools/call') recordCall(body.params, res)
     await server.instance.connect(transport)
-    await transport.handleRequest(req, res)
+    await transport.handleRequest(req, res, body)
   } catch (err) {
     console.error('[jarvis] MCP request failed:', err)
     if (!res.headersSent) res.writeHead(500)
     res.end()
+  }
+}
+
+/** The request body, parsed. Read here so the tool call can be recorded. */
+async function readJson(req) {
+  const chunks = []
+  for await (const chunk of req) chunks.push(chunk)
+  const text = Buffer.concat(chunks).toString('utf8')
+  return text ? JSON.parse(text) : undefined
+}
+
+/**
+ * Logs one face tool call with its arguments and the tool's reply, and sends
+ * it to the open faces as an `mcp` frame (the browser ignores it; the
+ * benchmark records it). A local model that passes `color` where the tool
+ * takes `accent` gets "No change" back and reports that it failed — this is
+ * the only place that difference is visible.
+ */
+function recordCall(params, res) {
+  const name = params?.name ?? '?'
+  const args = params?.arguments ?? {}
+  const chunks = []
+  const write = res.write.bind(res)
+  const end = res.end.bind(res)
+  res.write = (chunk, ...rest) => {
+    if (chunk) chunks.push(Buffer.from(chunk))
+    return write(chunk, ...rest)
+  }
+  res.end = (chunk, ...rest) => {
+    if (chunk && typeof chunk !== 'function') chunks.push(Buffer.from(chunk))
+    let reply = ''
+    let isError = false
+    try {
+      const raw = Buffer.concat(chunks).toString('utf8')
+      const json = JSON.parse(raw.slice(raw.indexOf('{')))
+      reply = (json.result?.content ?? []).map((c) => c.text ?? '').join(' ') || json.error?.message || ''
+      isError = Boolean(json.result?.isError || json.error)
+    } catch {
+      // Unparseable reply: record the call without it.
+    }
+    console.log(`[jarvis] face tool ${name} ${JSON.stringify(args)} -> ${reply}`)
+    broadcast({ type: 'mcp', name, args, reply, isError })
+    return end(chunk, ...rest)
   }
 }
 

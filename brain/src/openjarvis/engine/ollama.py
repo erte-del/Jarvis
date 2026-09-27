@@ -70,6 +70,16 @@ def _is_control_token_only_args(raw_args: Any) -> bool:
     return saw_token
 
 
+def _default_think() -> bool:
+    """Whether to let models think before answering. Off unless ``OPENJARVIS_THINK=1``.
+
+    Added for the Jarvis face benchmark, to measure what thinking buys a
+    small local model in accuracy and costs it in speed. The warnings at the
+    call sites still apply: thinking can use up the token budget.
+    """
+    return os.environ.get("OPENJARVIS_THINK", "") == "1"
+
+
 def _default_num_ctx() -> int:
     """Default context window (tokens). Override with ``JARVIS_NUM_CTX``.
 
@@ -172,7 +182,7 @@ class OllamaEngine(AsyncHTTPEngineMixin, InferenceEngine):
         # When enabled, thinking tokens consume the entire budget and
         # the visible content comes back empty.
         if "think" not in kwargs:
-            payload["think"] = False
+            payload["think"] = _default_think()
         elif kwargs["think"] is not None:
             payload["think"] = kwargs["think"]
         # Pass tools if provided
@@ -295,7 +305,7 @@ class OllamaEngine(AsyncHTTPEngineMixin, InferenceEngine):
         # stream for 60+ seconds before any tokens reach the client, which
         # frontends interpret as a "Load failed" timeout.
         if "think" not in kwargs:
-            payload["think"] = False
+            payload["think"] = _default_think()
         elif kwargs["think"] is not None:
             payload["think"] = kwargs["think"]
         try:
@@ -390,7 +400,7 @@ class OllamaEngine(AsyncHTTPEngineMixin, InferenceEngine):
             ),
         }
         if "think" not in kwargs:
-            payload["think"] = False
+            payload["think"] = _default_think()
         elif kwargs["think"] is not None:
             payload["think"] = kwargs["think"]
 
