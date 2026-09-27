@@ -12,6 +12,7 @@ bridge connects the face to the OpenJarvis brain.
 | `brain/` | OpenJarvis (Python): agents, local models, server and API | [open-jarvis/OpenJarvis](https://github.com/open-jarvis/OpenJarvis) |
 | `face/` | Holographic "Iron Man" UI (React + Three.js) and its Node bridge | [adewaskar/jarvis](https://github.com/adewaskar/jarvis) |
 | `config/` | Settings that connect OpenJarvis to the face's tools | |
+| `bench/` | Tests that compare the two brains | |
 | `LICENSES/` | The original license text of both projects | |
 
 See `UPSTREAM.md` for the exact upstream versions and the list of files we changed.
@@ -60,6 +61,39 @@ face controls (`ui_theme`, `ui_reactor`, `ui_orbit`, `ui_chrome`, `ui_effect`,
 `ui_screen`, `ui_reset`, `blade`).
 Not connected: `display` and `probe_url` (off by default, see `config/openjarvis.toml`),
 Chrome control, and the camera.
+
+## Compare the two brains
+
+`bench/` asks each brain the same 20 questions through the face bridge and compares them:
+facts, reasoning, conversation, and face commands. It measures time to the first word,
+time to the full answer, answer length, cost, and whether each answer passed a simple check.
+The questions are in `bench/questions.json`.
+
+1. **OpenJarvis.** Start the face and the brain as above. In a third terminal:
+
+   ```bash
+   node bench/run.mjs --runs 3
+   ```
+
+2. **Claude Code.** Stop both. Install and log in to Claude Code once:
+   `npm install -g @anthropic-ai/claude-code`, then `claude`. Then start the face
+   without `JARVIS_BRAIN` (in `face/`: `npm start`) and run:
+
+   ```bash
+   node bench/run.mjs --runs 3
+   ```
+
+   The Claude runs use your Claude plan.
+
+3. Make the report:
+
+   ```bash
+   node bench/report.mjs
+   ```
+
+   It writes `bench/results/report.md`, with a summary table and every answer side by side.
+
+Close the Jarvis page in Chrome while a test runs. Face changes from the test also show on an open page.
 
 ## Credits and licenses
 
