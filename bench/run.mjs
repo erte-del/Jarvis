@@ -12,6 +12,7 @@
  *   node bench/run.mjs --runs 3        # three passes, for steadier timings
  *   node bench/run.mjs --only fact-gold,face-red
  *   node bench/run.mjs --model claude-opus-5   # label for the Claude brain
+ *   node bench/run.mjs --tag thinking          # a name for this setup
  *
  * Which brain is running is read from the bridge. Results go to
  * bench/results/<brain>-<date>.json. Then run bench/report.mjs.
@@ -42,6 +43,9 @@ const option = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1]
 }
 const RUNS = Math.max(1, Number(option('runs', 1)))
+// A name for this setup, so two runs of one brain can sit side by side in the
+// report: --tag improved, --tag thinking. Letters, digits and dashes only.
+const TAG = option('tag', '').toLowerCase().replace(/[^a-z0-9-]/g, '')
 const ONLY = option('only', '')
 const TIMEOUT_MS = Number(option('timeout', 180)) * 1000
 const BRIDGE_PORT = Number(process.env.JARVIS_BRIDGE_PORT ?? 8787)
@@ -85,7 +89,7 @@ let asks = 0
 function ask(ws, text) {
   return new Promise((resolve) => {
     const id = `bench-${++asks}`
-    const out = { text: '', firstTextMs: null, totalMs: null, costUsd: null, tools: [], ui: [], error: null }
+    const out = { text: '', firstTextMs: null, totalMs: null, costUsd: null, tools: [], ui: [], calls: [], error: null }
     const start = performance.now()
 
     const finish = () => {
@@ -102,6 +106,9 @@ function ask(ws, text) {
       const m = JSON.parse(raw)
       // Face changes carry no turn id; everything else must be this turn's.
       if (m.type === 'ui') return void out.ui.push({ op: m.op, args: m.args ?? {} })
+      // Face tool calls with their arguments and replies. Only the OpenJarvis
+      // bridge sends these; they show why a face command did nothing.
+      if (m.type === 'mcp') return void out.calls.push({ name: m.name, args: m.args, reply: m.reply, isError: m.isError })
       if (m.ask !== id) return
       if (m.type === 'text') {
         out.firstTextMs ??= Math.round(performance.now() - start)
@@ -189,7 +196,7 @@ async function runTask(task, meta) {
     words: wordCount(last.text),
     spoken: looksSpoken(last.text),
     ...grade(task, last),
-    setup: stepResults.slice(0, -1).map((r) => ({ text: r.text, error: r.error, ui: r.ui })),
+    setup: stepResults.slice(0, -1).map((r) => ({ text: r.text, error: r.error, ui: r.ui, calls: r.calls })),
   }
 }
 
@@ -229,12 +236,14 @@ const cpu = cpus()[0]?.model ?? 'unknown'
 const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 19)
 const outDir = join(HERE, 'results')
 mkdirSync(outDir, { recursive: true })
-const file = join(outDir, `${meta.brain}-${stamp}.json`)
+const setup = TAG ? `${meta.brain}-${TAG}` : meta.brain
+const file = join(outDir, `${setup}-${stamp}.json`)
 writeFileSync(
   file,
   JSON.stringify(
     {
       ...meta,
+      tag: TAG,
       date: new Date().toISOString(),
       runs: RUNS,
       machine: { platform: platform(), release: release(), arch: arch(), cpu, memoryGB: Math.round(totalmem() / 2 ** 30) },

@@ -26,4 +26,5 @@ Apache 2.0 asks us to mark changed files. Add a line here for each change.
 | `face/bridge/openjarvis.mjs` | Serves the existing `ui_*` and `display`/`blade` tools over MCP at `/mcp/ui` and `/mcp/display`, for OpenJarvis. |
 | `face/bridge/server.mjs` | Routes `/mcp/ui` and `/mcp/display` to `openjarvis.mjs` in OpenJarvis mode. |
 | `face/bridge/ui.mjs` | Added a `keepChanges` option. With it, `ui_theme` and `ui_reset` tell the model to keep changes until the user undoes them. The Claude path does not use it. |
+| `brain/src/openjarvis/engine/ollama.py` | Thinking stays off by default, but `OPENJARVIS_THINK=1` turns it on, for the benchmark. |
 | `face/package.json`, `face/package-lock.json` | Added `@modelcontextprotocol/sdk` as a direct dependency. It was already installed through the Claude Agent SDK. |
