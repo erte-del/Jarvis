@@ -9,10 +9,18 @@
  *
  * Chosen with JARVIS_BRAIN=openjarvis. Read by bridge/server.mjs.
  *
- * Not carried over yet: the in-process MCP servers (display, ui_*, chrome,
- * camera). OpenJarvis cannot call them until they are split out into their
- * own MCP server, so this brain speaks but does not drive the interface.
+ * The other direction runs over MCP. The same ui_* and display tools the
+ * Claude path loads in-process are served here over HTTP, at /mcp/ui and
+ * /mcp/display, so OpenJarvis can load them as outside MCP servers (see
+ * config/openjarvis.toml). A call pushes its frame to every open face.
+ *
+ * Not carried over: the Chrome and camera servers. The camera has to ask the
+ * browser and wait for a reply, which needs a turn to belong to.
  */
+
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
+import { displayServer } from './panels.mjs'
+import { uiServer } from './ui.mjs'
 
 export const OJ_URL = (process.env.OPENJARVIS_URL ?? 'http://127.0.0.1:8000').replace(/\/+$/, '')
 const OJ_KEY = process.env.OPENJARVIS_API_KEY ?? ''
@@ -33,16 +41,85 @@ const HISTORY_LIMIT = Number(process.env.OPENJARVIS_HISTORY ?? 12)
 const HEARTBEAT_MS = 15_000
 
 /**
- * Much shorter than the Claude persona in server.mjs: that one also teaches
- * the blade and ui_* tools, which do not exist on this path, and a local model
- * pays for every token of it on every turn.
+ * Much shorter than the Claude persona in server.mjs, because a local model
+ * pays for every token of it on every turn. The tools' own descriptions carry
+ * the detail of how to use them.
  */
 const SYSTEM_PROMPT = `You are JARVIS, speaking out loud to one person.
 Keep every answer short: one or two sentences, unless they asked you to read out data.
 Plain spoken prose only. No markdown, lists, headings, emoji or asterisks.
 Write numbers, dates and times as you would say them.
 Dry, calm, British service register. Address the user as "sir" now and then.
-Never apologise, never use filler words, never say you are an AI model.`
+Never apologise, never use filler words, never say you are an AI model.
+
+The screen in front of the user is your own face. The ui_ tools change it:
+ui_theme recolours it, ui_reactor reshapes the core, ui_effect fires one effect,
+ui_chrome hides or shows the side panels, ui_reset puts everything back.
+When the user asks you to change how you look, call the tool, then confirm in a few words.
+Otherwise change it only when it carries meaning, one change at a time.
+The blade tool opens an article, image or video on screen when the user asks to see something.`
+
+/** Every open face in OpenJarvis mode. MCP tool calls are pushed to all of them. */
+const faces = new Set()
+
+function broadcast(msg) {
+  const frame = JSON.stringify(msg)
+  for (const socket of faces) {
+    if (socket.readyState === socket.OPEN) socket.send(frame)
+  }
+}
+
+/**
+ * The MCP servers OpenJarvis can load, by path. Built fresh for every request:
+ * the transport runs stateless, and an MCP server object serves one transport.
+ * Frames match what the Claude path sends in server.mjs.
+ */
+const MCP_ROUTES = {
+  '/mcp/ui': () => uiServer((op, args) => broadcast({ type: 'ui', op, args })),
+  '/mcp/display': () =>
+    displayServer(
+      (panel) => broadcast({ type: 'panel', panel }),
+      (blade) => broadcast({ type: 'blade', blade }),
+    ),
+}
+
+const LOOPBACK = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])
+
+/** True when this request is for one of the MCP routes above. */
+export const isMcpRequest = (req) => Object.hasOwn(MCP_ROUTES, (req.url ?? '').split('?')[0])
+
+/**
+ * Serve one MCP request.
+ *
+ * Whoever reaches this can put things on the user's screen, so it is locked to
+ * this machine, and to programs rather than pages: a browser always sends an
+ * Origin header on a cross-site POST, and OpenJarvis never does. That also
+ * shuts out the app's own pages — they have no business calling these tools.
+ */
+export async function handleMcp(req, res) {
+  if (!LOOPBACK.has(req.socket.remoteAddress ?? '') || req.headers.origin) {
+    console.warn('[jarvis] refused MCP request from', req.headers.origin ?? req.socket.remoteAddress)
+    res.writeHead(403)
+    return res.end('forbidden')
+  }
+  const server = MCP_ROUTES[req.url.split('?')[0]]()
+  const transport = new StreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
+  })
+  res.on('close', () => {
+    void transport.close()
+    void server.instance.close()
+  })
+  try {
+    await server.instance.connect(transport)
+    await transport.handleRequest(req, res)
+  } catch (err) {
+    console.error('[jarvis] MCP request failed:', err)
+    if (!res.headersSent) res.writeHead(500)
+    res.end()
+  }
+}
 
 const headers = () => ({
   'Content-Type': 'application/json',
@@ -137,6 +214,7 @@ export function handleOpenJarvis(socket) {
     if (socket.readyState === socket.OPEN) socket.send(JSON.stringify(msg))
   }
 
+  faces.add(socket)
   send({ type: 'ready', servers: ['openjarvis'] })
 
   /** Earlier turns, oldest first, as OpenAI chat messages. */
@@ -211,6 +289,7 @@ export function handleOpenJarvis(socket) {
 
   socket.on('close', () => {
     console.log('[jarvis] client disconnected')
+    faces.delete(socket)
     current?.controller.abort()
   })
 }

@@ -1,0 +1,23 @@
+# OpenJarvis settings for the Jarvis face.
+#
+# Use it by starting the brain with OPENJARVIS_CONFIG pointing here (see the
+# README). It replaces ~/.openjarvis/config.toml for that run.
+#
+# It connects OpenJarvis to the face's own tools, which the face bridge serves
+# on port 8787. OpenJarvis looks for them once, when it starts, so start the
+# face first. If you change JARVIS_BRIDGE_PORT, change the port here too.
+
+[tools.mcp]
+enabled = true
+# jarvis_ui:      ui_theme, ui_reactor, ui_orbit, ui_chrome, ui_effect,
+#                 ui_screen, ui_reset — the model changes its own face.
+# jarvis_display: blade — opens an article, image or video on screen.
+#                 `display` and `probe_url` are left out. `display` alone is
+#                 about 2,500 tokens of instructions, which a small local model
+#                 pays for on every turn. Delete the exclude_tools entry to
+#                 turn them on.
+servers = '''[
+  {"name": "jarvis_ui", "url": "http://127.0.0.1:8787/mcp/ui"},
+  {"name": "jarvis_display", "url": "http://127.0.0.1:8787/mcp/display",
+   "exclude_tools": ["display", "probe_url"]}
+]'''

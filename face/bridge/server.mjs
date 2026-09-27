@@ -27,7 +27,7 @@ import { readFile, realpath, stat } from 'node:fs/promises'
 import { isAbsolute, join, relative, resolve as resolvePath } from 'node:path'
 import { openRemote, proxyError, vetTarget, PROXY_UA } from './net.mjs'
 import { probeUrl, renderPage } from './page.mjs'
-import { handleOpenJarvis, OJ_URL, openJarvisStatus } from './openjarvis.mjs'
+import { handleMcp, handleOpenJarvis, isMcpRequest, OJ_URL, openJarvisStatus } from './openjarvis.mjs'
 
 const PORT = Number(process.env.JARVIS_BRIDGE_PORT ?? 8787)
 
@@ -671,6 +671,10 @@ function corsFor(req) {
 const http = await import('node:http')
 
 const handleRequest = async (req, res) => {
+  // The interface tools, served to OpenJarvis. Before the origin check below,
+  // because this route refuses every origin, the app's own pages included.
+  if (BRAIN === 'openjarvis' && isMcpRequest(req)) return handleMcp(req, res)
+
   const origin = req.headers.origin
   if (origin && !originAllowed(origin)) {
     console.warn(`[jarvis] refused http request from origin ${origin}`)

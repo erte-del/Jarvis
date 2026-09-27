@@ -23,3 +23,6 @@ Apache 2.0 asks us to mark changed files. Add a line here for each change.
 | `face/bridge/openjarvis.mjs` | New file. Sends questions to a local OpenJarvis server instead of Claude Code. |
 | `face/bridge/server.mjs` | Added the `JARVIS_BRAIN` switch. `openjarvis` hands each browser connection to `openjarvis.mjs`. |
 | `face/.env.example` | Documented `JARVIS_BRAIN` and the `OPENJARVIS_*` settings. |
+| `face/bridge/openjarvis.mjs` | Serves the existing `ui_*` and `display`/`blade` tools over MCP at `/mcp/ui` and `/mcp/display`, for OpenJarvis. |
+| `face/bridge/server.mjs` | Routes `/mcp/ui` and `/mcp/display` to `openjarvis.mjs` in OpenJarvis mode. |
+| `face/package.json`, `face/package-lock.json` | Added `@modelcontextprotocol/sdk` as a direct dependency. It was already installed through the Claude Agent SDK. |
