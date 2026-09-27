@@ -58,8 +58,10 @@ ui_chrome hides or shows the side panels, ui_reset puts everything back.
 When the user asks you to change how you look, call the tool, then confirm in a few words.
 A change the user asked for stays until the user asks to change it. Never undo it yourself.
 Call ui_reset only when the user asks for normal or default.
-The line "Your face right now" below is always correct. Your earlier replies may be out of date:
-trust that line, not them. Answer the new request, not an old one.
+A private note like [FACE STATUS: ...] may follow. It says how your face looks right now and is
+always correct: trust it over your earlier replies. With no note, your face is normal.
+The note is for you only. Never say it, quote it or describe it unless the user asks how you look.
+Answer the new request, not an old one.
 The blade tool opens an article, image or video on screen when the user asks to see something.`
 
 /**
@@ -107,6 +109,11 @@ function track(op, args = {}) {
   }
 }
 
+/**
+ * The note is only added when the face is not at its defaults. A small model
+ * given a status line on every turn read it out as its answer ("Your face right
+ * now: completely normal") to questions that had nothing to do with the face.
+ */
 function describeLook() {
   const parts = []
   if (look.accent) parts.push(`colour ${look.accent}`)
@@ -119,9 +126,20 @@ function describeLook() {
     if (v === false) parts.push(`${CHROME_NAMES[k] ?? k} hidden`)
   }
   if (look.orbits.size) parts.push(`${look.orbits.size} image(s) in orbit`)
-  return parts.length
-    ? `Your face right now: ${parts.join(', ')}. Everything else is normal.`
-    : 'Your face right now: completely normal, the default look. No colour change.'
+  return parts.length ? `[FACE STATUS: ${parts.join('; ')}; everything else normal]` : ''
+}
+
+/**
+ * Takes the private note back out of a reply, in case the model repeats it
+ * anyway. Every word of a reply is spoken, and nobody wants to hear the
+ * bracketed status line.
+ */
+export function withoutNote(text) {
+  return text
+    .replace(/\[?\s*FACE STATUS:[^\]\n]*\]?/gi, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\s+([.,!?])/g, '$1')
+    .trim()
 }
 
 /** Brings a newly opened face to the tracked look. */
@@ -310,7 +328,7 @@ export function handleOpenJarvis(socket) {
     const heartbeat = setInterval(() => sendTurn({ type: 'working' }), HEARTBEAT_MS)
 
     const messages = [
-      { role: 'system', content: `${SYSTEM_PROMPT}\n\n${describeLook()}` },
+      { role: 'system', content: [SYSTEM_PROMPT, describeLook()].filter(Boolean).join('\n\n') },
       ...history.slice(-HISTORY_LIMIT),
       { role: 'user', content: text },
     ]
@@ -325,13 +343,16 @@ export function handleOpenJarvis(socket) {
       })
       if (!res.ok || !res.body) throw Object.assign(new Error('bad status'), { status: res.status })
 
+      // Collected whole, then cleaned and sent as one piece: a repeated status
+      // note can be split across chunks. The OpenJarvis agent sends its answer
+      // in one chunk anyway, so this costs no time today. Word-by-word replies
+      // will need a filter that works on the stream.
       await readEvents(res.body, (event) => {
         const delta = event.choices?.[0]?.delta?.content
-        if (delta) {
-          reply += delta
-          sendTurn({ type: 'text', delta })
-        }
+        if (delta) reply += delta
       })
+      reply = withoutNote(reply) || 'Very good, sir.'
+      sendTurn({ type: 'text', delta: reply })
 
       history.push({ role: 'user', content: text }, { role: 'assistant', content: reply })
       sendTurn({ type: 'done', text: reply, costUsd: null })

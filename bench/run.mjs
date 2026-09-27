@@ -201,6 +201,11 @@ function check(task, result) {
   if (task.expect_ui && !uiMatches(result.ui, task.expect_ui)) {
     reasons.push(`expected face change: ${task.expect_ui.op}${task.expect_ui.path ? ` ${task.expect_ui.path}` : ''}`)
   }
+  // The OpenJarvis bridge gives the model a private note on the face's state.
+  // Hearing it read out is a failure whatever else the answer got right.
+  if (/FACE STATUS|your face right now/i.test(result.text)) {
+    reasons.push('read out the private face-status note')
+  }
   if (task.max_words && wordCount(result.text) > task.max_words) {
     reasons.push(`too long: ${wordCount(result.text)} words, limit ${task.max_words}`)
   }
