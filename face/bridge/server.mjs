@@ -27,8 +27,16 @@ import { readFile, realpath, stat } from 'node:fs/promises'
 import { isAbsolute, join, relative, resolve as resolvePath } from 'node:path'
 import { openRemote, proxyError, vetTarget, PROXY_UA } from './net.mjs'
 import { probeUrl, renderPage } from './page.mjs'
+import { handleOpenJarvis, OJ_URL, openJarvisStatus } from './openjarvis.mjs'
 
 const PORT = Number(process.env.JARVIS_BRIDGE_PORT ?? 8787)
+
+/**
+ * Which brain answers. `claude` (the default) runs Claude Code through the
+ * Agent SDK, below. `openjarvis` sends each question to a local OpenJarvis
+ * server instead — see bridge/openjarvis.mjs.
+ */
+const BRAIN = process.env.JARVIS_BRAIN === 'openjarvis' ? 'openjarvis' : 'claude'
 
 /**
  * A crash here takes the whole assistant down mid-sentence, and most of what
@@ -1004,7 +1012,12 @@ console.log(`[jarvis] bridge listening on ws://localhost:${PORT}`)
 console.log(
   `[jarvis] speech ${elevenKey() ? 'via ElevenLabs (key from MCP config)' : 'using browser fallback voice'}`,
 )
-console.log(`[jarvis] model ${MODEL} · effort ${EFFORT}`)
+if (BRAIN === 'openjarvis') {
+  console.log(`[jarvis] brain OpenJarvis at ${OJ_URL}`)
+  void openJarvisStatus().then((status) => console.log(`[jarvis] OpenJarvis ${status}`))
+} else {
+  console.log(`[jarvis] model ${MODEL} · effort ${EFFORT}`)
+}
 console.log(
   `[jarvis] writes ${ALLOW_WRITES ? 'ENABLED' : 'disabled'}` +
     (ALLOW_WRITES ? '' : ' — set JARVIS_ALLOW_WRITES=1 to permit shell/file/device actions'),
@@ -1041,6 +1054,8 @@ const RESULT_FAILURES = {
 
 wss.on('connection', (socket) => {
   console.log('[jarvis] client connected')
+
+  if (BRAIN === 'openjarvis') return handleOpenJarvis(socket)
 
   // Answer the HUD straight away rather than making it wait for the agent's
   // first turn. Refined later by the real init message.

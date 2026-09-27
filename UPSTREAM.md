@@ -20,4 +20,6 @@ Apache 2.0 asks us to mark changed files. Add a line here for each change.
 
 | File | Change |
 | --- | --- |
-| _none yet_ | |
+| `face/bridge/openjarvis.mjs` | New file. Sends questions to a local OpenJarvis server instead of Claude Code. |
+| `face/bridge/server.mjs` | Added the `JARVIS_BRAIN` switch. `openjarvis` hands each browser connection to `openjarvis.mjs`. |
+| `face/.env.example` | Documented `JARVIS_BRAIN` and the `OPENJARVIS_*` settings. |
