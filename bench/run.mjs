@@ -22,6 +22,7 @@ import { cpus, totalmem, platform, arch, release } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { performance } from 'node:perf_hooks'
+import { grade, looksSpoken, wordCount } from './checks.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 
@@ -147,71 +148,6 @@ async function resetFace() {
   if (!call.ok || body.includes('"error"')) throw new Error(`face reset failed: ${body.slice(0, 200)}`)
 }
 
-// ---------------------------------------------------------------- checks
-
-const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-/** Whole-word match, so "au" finds the symbol for gold but not "because". */
-function contains(text, word) {
-  const start = /^\w/.test(word) ? '\\b' : ''
-  const end = /\w$/.test(word) ? '\\b' : ''
-  return new RegExp(`${start}${escape(word)}${end}`, 'i').test(text)
-}
-
-const get = (obj, path) => path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj)
-
-function isRed(value) {
-  const s = String(value ?? '').trim().toLowerCase()
-  if (/red|crimson|scarlet|maroon/.test(s)) return true
-  let m = s.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/)
-  if (m) m = [null, m[1] + m[1], m[2] + m[2], m[3] + m[3]]
-  else m = s.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/)
-  if (m) {
-    const [r, g, b] = m.slice(1, 4).map((h) => parseInt(h, 16))
-    return r >= 150 && g < 110 && b < 110
-  }
-  m = s.match(/rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/)
-  return Boolean(m && +m[1] >= 150 && +m[2] < 110 && +m[3] < 110)
-}
-
-function uiMatches(frames, want) {
-  return frames.some((f) => {
-    if (f.op !== want.op) return false
-    if (!want.path) return true
-    const value = get(f.args, want.path)
-    const [kind, arg] = (want.test ?? 'any').split(':')
-    if (kind === 'red') return isRed(value)
-    if (kind === 'above') return Number(value) > Number(arg)
-    if (kind === 'equals') return String(value) === arg
-    return value !== undefined
-  })
-}
-
-const wordCount = (text) => (text.match(/\S+/g) ?? []).length
-
-/** Markdown is read aloud as symbols, so the face asks for plain speech. */
-const looksSpoken = (text) => !/(\*\*|^#{1,6}\s|^\s*[-*]\s|^\s*\d+\.\s|`)/m.test(text)
-
-function check(task, result) {
-  const reasons = []
-  if (result.error) reasons.push(`error: ${result.error}`)
-  if (task.expect && !task.expect.some((w) => contains(result.text, w))) {
-    reasons.push(`expected one of: ${task.expect.slice(0, 3).join(', ')}`)
-  }
-  if (task.expect_ui && !uiMatches(result.ui, task.expect_ui)) {
-    reasons.push(`expected face change: ${task.expect_ui.op}${task.expect_ui.path ? ` ${task.expect_ui.path}` : ''}`)
-  }
-  // The OpenJarvis bridge gives the model a private note on the face's state.
-  // Hearing it read out is a failure whatever else the answer got right.
-  if (/FACE STATUS|your face right now/i.test(result.text)) {
-    reasons.push('read out the private face-status note')
-  }
-  if (task.max_words && wordCount(result.text) > task.max_words) {
-    reasons.push(`too long: ${wordCount(result.text)} words, limit ${task.max_words}`)
-  }
-  return { pass: reasons.length === 0, reasons }
-}
-
 // ---------------------------------------------------------------- run
 
 async function describeBrain() {
@@ -252,7 +188,7 @@ async function runTask(task, meta) {
     ...last,
     words: wordCount(last.text),
     spoken: looksSpoken(last.text),
-    ...check(task, last),
+    ...grade(task, last),
     setup: stepResults.slice(0, -1).map((r) => ({ text: r.text, error: r.error, ui: r.ui })),
   }
 }
@@ -279,7 +215,8 @@ for (let run = 1; run <= RUNS; run++) {
     const r = await runTask(task, meta)
     results.push({ id: task.id, category: task.category, ask: task.steps?.at(-1) ?? task.ask, run, ...r })
     const time = r.totalMs == null ? '   —  ' : `${(r.totalMs / 1000).toFixed(1).padStart(5)} s`
-    console.log(`${r.pass ? 'PASS' : 'FAIL'}  ${time}  ${task.id}${r.pass ? '' : `  (${r.reasons.join('; ')})`}`)
+    const notes = [...r.reasons, ...r.styleIssues.map((i) => `style: ${i}`)]
+    console.log(`${r.pass ? 'PASS' : 'FAIL'}  ${time}  ${task.id}${notes.length ? `  (${notes.join('; ')})` : ''}`)
   }
 }
 

@@ -64,10 +64,13 @@ Chrome control, and the camera.
 
 ## Compare the two brains
 
-`bench/` asks each brain the same 20 questions through the face bridge and compares them:
-facts, reasoning, conversation, and face commands. It measures time to the first word,
-time to the full answer, answer length, cost, and whether each answer passed a simple check.
-The questions are in `bench/questions.json`.
+`bench/` asks each brain the same 38 questions through the face bridge and compares them:
+facts, multi-step reasoning, strict instructions, conversation, and face commands.
+It grades two things separately. **Correct**: did it do what was asked? **Style**: does it
+sound like JARVIS speaking (numbers as words, no filler, short, no face changes nobody asked for)?
+It also measures time to the first word, time to the full answer, and cost.
+The questions are in `bench/questions.json`, the checks in `bench/checks.mjs`.
+The report grades saved answers again with the current checks.
 
 1. **OpenJarvis.** Start the face and the brain as above. In a third terminal:
 

@@ -1,28 +1,412 @@
 {
-  "about": "The question set for bench/run.mjs. Each task is asked on a fresh connection. `expect`: the answer must contain at least one of these words (case does not matter). `expect_ui`: the brain must send this face change while answering. `max_words`: the answer must be this short. `steps`: several messages in one conversation; the checks apply to the last one.",
-  "tasks": [
-    { "id": "fact-capital", "category": "facts", "ask": "What is the capital of Australia?", "expect": ["canberra"] },
-    { "id": "fact-planet", "category": "facts", "ask": "What is the largest planet in our solar system?", "expect": ["jupiter"] },
-    { "id": "fact-1984", "category": "facts", "ask": "Who wrote the novel 1984?", "expect": ["orwell"] },
-    { "id": "fact-gold", "category": "facts", "ask": "What is the chemical symbol for gold?", "expect": ["au"] },
-    { "id": "fact-boiling", "category": "facts", "ask": "At what temperature does water boil, in Fahrenheit, at sea level?", "expect": ["212", "two hundred and twelve", "two hundred twelve"] },
-    { "id": "fact-spider", "category": "facts", "ask": "How many legs does a spider have?", "expect": ["eight", "8"] },
-
-    { "id": "math-multiply", "category": "reasoning", "ask": "What is 17 times 23?", "expect": ["391", "three hundred and ninety-one", "three hundred ninety-one", "three hundred and ninety one", "three hundred ninety one"] },
-    { "id": "math-apples", "category": "reasoning", "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?", "expect": ["7", "seven"] },
-    { "id": "logic-days", "category": "reasoning", "ask": "What day comes two days after Friday?", "expect": ["sunday"] },
-    { "id": "logic-prime", "category": "reasoning", "ask": "Is 91 a prime number?", "expect": ["not a prime", "not prime", "isn't prime", "is not", "no,", "no.", "13", "thirteen", "seven times"] },
-    { "id": "logic-train", "category": "reasoning", "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?", "expect": ["5:15", "five fifteen", "quarter past five", "5.15"] },
-
-    { "id": "talk-greeting", "category": "conversation", "ask": "Good morning, Jarvis.", "max_words": 30 },
-    { "id": "talk-blackhole", "category": "conversation", "ask": "Explain what a black hole is.", "expect": ["gravity", "gravitational"], "max_words": 60 },
-    { "id": "talk-joke", "category": "conversation", "ask": "Tell me a short joke.", "max_words": 50 },
-    { "id": "talk-memory", "category": "conversation", "steps": ["My favourite colour is teal. Remember that.", "What is my favourite colour?"], "expect": ["teal"] },
-
-    { "id": "face-red", "category": "face", "ask": "Turn yourself red.", "expect_ui": { "op": "patch", "path": "accent", "test": "red" } },
-    { "id": "face-bigger", "category": "face", "ask": "Make your core bigger.", "expect_ui": { "op": "patch", "path": "reactor.scale", "test": "above:1" } },
-    { "id": "face-glitch", "category": "face", "ask": "Do a glitch effect.", "expect_ui": { "op": "effect", "path": "kind", "test": "equals:glitch" } },
-    { "id": "face-hide", "category": "face", "ask": "Hide the systems panel on the left.", "expect_ui": { "op": "patch", "path": "chrome.systems", "test": "equals:false" } },
-    { "id": "face-reset", "category": "face", "steps": ["Turn yourself green.", "Put everything back to normal."], "expect_ui": { "op": "reset" } }
-  ]
+ "about": "The question set for bench/run.mjs; graded by bench/checks.mjs. Each task is asked on a fresh connection. Correctness: `expect` (the answer must contain one of these words; `check: last_sentence` looks only at the last sentence; `letters: true` ignores spaces and punctuation), `expect_ui` (face changes that must happen, one or a list), `no_ui` (the face must not change), `max_words` (a length the question itself demands). Style: `style_max_words` (default 30) and `allow_ui` (the only face settings the task may change). `steps`: several messages in one conversation; the checks apply to the last one.",
+ "tasks": [
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "expect": [
+    "canberra"
+   ]
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "expect": [
+    "jupiter"
+   ]
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "expect": [
+    "orwell"
+   ]
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "expect": [
+    "au"
+   ]
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "expect": [
+    "212",
+    "two hundred and twelve",
+    "two hundred twelve"
+   ]
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "expect": [
+    "eight",
+    "8"
+   ]
+  },
+  {
+   "id": "fact-curie",
+   "category": "facts",
+   "ask": "Who was the first woman to win a Nobel Prize?",
+   "expect": [
+    "curie"
+   ]
+  },
+  {
+   "id": "fact-berlin",
+   "category": "facts",
+   "ask": "In what year did the Berlin Wall fall?",
+   "expect": [
+    "1989",
+    "nineteen eighty-nine",
+    "nineteen eighty nine"
+   ]
+  },
+  {
+   "id": "fact-prime101",
+   "category": "facts",
+   "ask": "What is the smallest prime number greater than one hundred?",
+   "expect": [
+    "101",
+    "one hundred and one",
+    "one hundred one",
+    "a hundred and one"
+   ]
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "expect": [
+    "391",
+    "three hundred and ninety-one",
+    "three hundred ninety-one",
+    "three hundred and ninety one",
+    "three hundred ninety one"
+   ]
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "expect": [
+    "7",
+    "seven"
+   ]
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "expect": [
+    "sunday"
+   ]
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "expect": [
+    "not a prime",
+    "not prime",
+    "isn't prime",
+    "is not",
+    "no,",
+    "no.",
+    "13",
+    "thirteen",
+    "seven times"
+   ]
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "expect": [
+    "5:15",
+    "five fifteen",
+    "quarter past five",
+    "5.15"
+   ]
+  },
+  {
+   "id": "math-discount",
+   "category": "reasoning",
+   "ask": "A shirt costs forty dollars. It is twenty-five percent off, and then ten percent tax is added to the sale price. How much do I pay?",
+   "expect": [
+    "33",
+    "thirty-three",
+    "thirty three"
+   ],
+   "check": "last_sentence",
+   "style_max_words": 40
+  },
+  {
+   "id": "math-percent",
+   "category": "reasoning",
+   "ask": "What is fifteen percent of two hundred and forty?",
+   "expect": [
+    "36",
+    "thirty-six",
+    "thirty six"
+   ]
+  },
+  {
+   "id": "logic-sisters",
+   "category": "reasoning",
+   "ask": "Sally has three brothers. Each of her brothers has two sisters. How many sisters does Sally have?",
+   "expect": [
+    "one",
+    "1",
+    "a sister",
+    "only one",
+    "just one"
+   ],
+   "check": "last_sentence",
+   "style_max_words": 40
+  },
+  {
+   "id": "logic-turns",
+   "category": "reasoning",
+   "ask": "I am facing north. I turn right, then right again, then left. Which way am I facing now?",
+   "expect": [
+    "east"
+   ],
+   "check": "last_sentence",
+   "style_max_words": 40
+  },
+  {
+   "id": "logic-sequence",
+   "category": "reasoning",
+   "ask": "What number comes next: 2, 6, 12, 20, 30?",
+   "expect": [
+    "42",
+    "forty-two",
+    "forty two"
+   ],
+   "check": "last_sentence",
+   "style_max_words": 40
+  },
+  {
+   "id": "logic-yesterday",
+   "category": "reasoning",
+   "ask": "If yesterday was Wednesday, what day will it be the day after tomorrow?",
+   "expect": [
+    "saturday"
+   ],
+   "check": "last_sentence"
+  },
+  {
+   "id": "logic-strawberry",
+   "category": "reasoning",
+   "ask": "How many times does the letter r appear in the word strawberry?",
+   "expect": [
+    "three",
+    "3"
+   ],
+   "check": "last_sentence"
+  },
+  {
+   "id": "logic-feathers",
+   "category": "reasoning",
+   "ask": "Which is heavier: a kilogram of feathers or a kilogram of steel?",
+   "expect": [
+    "same",
+    "equal",
+    "neither",
+    "both weigh",
+    "both a kilogram",
+    "both one kilogram",
+    "identical"
+   ]
+  },
+  {
+   "id": "inst-oneword",
+   "category": "instructions",
+   "ask": "Answer with one word only: what colour is a clear daytime sky?",
+   "expect": [
+    "blue"
+   ],
+   "max_words": 2
+  },
+  {
+   "id": "inst-yesno",
+   "category": "instructions",
+   "ask": "Reply with only yes or no: is the Pacific the largest ocean on Earth?",
+   "expect": [
+    "yes"
+   ],
+   "max_words": 2
+  },
+  {
+   "id": "inst-backwards",
+   "category": "instructions",
+   "ask": "Spell the word lemon backwards.",
+   "expect": [
+    "nomel"
+   ],
+   "letters": true,
+   "max_words": 8
+  },
+  {
+   "id": "inst-fruits",
+   "category": "instructions",
+   "ask": "Name three fruits and nothing else.",
+   "max_words": 10
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "style_max_words": 15
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "expect": [
+    "gravity",
+    "gravitational"
+   ],
+   "style_max_words": 60
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "style_max_words": 30
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "steps": [
+    "My favourite colour is teal. Remember that.",
+    "What is my favourite colour?"
+   ],
+   "expect": [
+    "teal"
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "expect_ui": {
+    "op": "patch",
+    "path": "accent",
+    "test": "red"
+   },
+   "allow_ui": [
+    "accent",
+    "reactor.color",
+    "palette"
+   ]
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "expect_ui": {
+    "op": "patch",
+    "path": "reactor.scale",
+    "test": "above:1"
+   },
+   "allow_ui": [
+    "reactor.scale"
+   ]
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "expect_ui": {
+    "op": "effect",
+    "path": "kind",
+    "test": "equals:glitch"
+   },
+   "allow_ui": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "expect_ui": {
+    "op": "patch",
+    "path": "chrome.systems",
+    "test": "equals:false"
+   },
+   "allow_ui": [
+    "chrome.systems"
+   ]
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "steps": [
+    "Turn yourself green.",
+    "Put everything back to normal."
+   ],
+   "expect_ui": {
+    "op": "reset"
+   },
+   "allow_ui": []
+  },
+  {
+   "id": "face-combo",
+   "category": "face",
+   "ask": "Make yourself blue and hide the transcript.",
+   "expect_ui": [
+    {
+     "op": "patch",
+     "path": "accent",
+     "test": "blue"
+    },
+    {
+     "op": "patch",
+     "path": "chrome.transcript",
+     "test": "equals:false"
+    }
+   ],
+   "allow_ui": [
+    "accent",
+    "reactor.color",
+    "palette",
+    "chrome.transcript"
+   ]
+  },
+  {
+   "id": "face-spin",
+   "category": "face",
+   "ask": "Make your core spin faster.",
+   "expect_ui": {
+    "op": "patch",
+    "path": "reactor.spin",
+    "test": "above:1"
+   },
+   "allow_ui": [
+    "reactor.spin"
+   ]
+  },
+  {
+   "id": "face-stays",
+   "category": "face",
+   "steps": [
+    "Turn yourself red.",
+    "What is two plus two?"
+   ],
+   "expect": [
+    "four",
+    "4"
+   ],
+   "no_ui": true
+  }
+ ]
 }
