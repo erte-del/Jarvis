@@ -1,0 +1,1271 @@
+{
+ "brain": "openjarvis",
+ "model": "qwen3:8b",
+ "agent": "orchestrator",
+ "date": "2026-09-27T15:08:45.657Z",
+ "runs": 3,
+ "machine": {
+  "platform": "darwin",
+  "release": "25.6.0",
+  "arch": "arm64",
+  "cpu": "Apple M5",
+  "memoryGB": 24
+ },
+ "results": [
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 1,
+   "text": "The capital of Australia is Canberra.",
+   "firstTextMs": 556,
+   "totalMs": 557,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 1,
+   "text": "The largest planet in our solar system is Jupiter. It is a gas giant with a diameter of about 86,881 miles (139,822 kilometers).",
+   "firstTextMs": 2005,
+   "totalMs": 2005,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 23,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 1,
+   "text": "The novel *1984* was written by George Orwell.",
+   "firstTextMs": 875,
+   "totalMs": 875,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 1,
+   "text": "The chemical symbol for gold is Au.",
+   "firstTextMs": 588,
+   "totalMs": 589,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 1,
+   "text": "Water boils at 212 degrees Fahrenheit at sea level.",
+   "firstTextMs": 829,
+   "totalMs": 829,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 1,
+   "text": "A spider has eight legs.",
+   "firstTextMs": 497,
+   "totalMs": 497,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 1,
+   "text": "17 times 23 is 391.",
+   "firstTextMs": 2083,
+   "totalMs": 2083,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 1,
+   "text": "You start with three apples, eat one, leaving two. Then you buy five more. So now you have 2 + 5 = 7 apples.",
+   "firstTextMs": 1726,
+   "totalMs": 1727,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 24,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 1,
+   "text": "The day two days after Friday is Sunday.",
+   "firstTextMs": 648,
+   "totalMs": 649,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 1,
+   "text": "No, 91 is not a prime number. It can be divided by 7 and 13 (7 × 13 = 91).",
+   "firstTextMs": 1798,
+   "totalMs": 1798,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 20,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 1,
+   "text": "The train leaves at 3:40 and the trip takes 1 hour and 35 minutes. It will arrive at 5:15.",
+   "firstTextMs": 1768,
+   "totalMs": 1768,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 19,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 1,
+   "text": "Good morning, sir. How can I assist you today?",
+   "firstTextMs": 785,
+   "totalMs": 785,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 1,
+   "text": "A black hole is a region in space where gravity is so strong that nothing, not even light, can escape from it. It forms when a massive star collapses under its own gravity, creating a point of infinite density called a singularity. The boundary around this singularity, known as the event horizon, marks the point of no return for anything that crosses it.",
+   "firstTextMs": 3602,
+   "totalMs": 3602,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 63,
+   "spoken": true,
+   "pass": false,
+   "reasons": [
+    "too long: 63 words, limit 60"
+   ],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 1,
+   "text": "Why don't skeletons fight each other? Because they don't have the guts.",
+   "firstTextMs": 968,
+   "totalMs": 969,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 12,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 1,
+   "text": "Your face right now: completely normal, the default look. No colour change. Your favourite colour is teal.",
+   "firstTextMs": 1249,
+   "totalMs": 1249,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 17,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Your face right now: completely normal, the default look. No colour change. I have noted your favourite colour is teal.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 1,
+   "text": "Your face right now: red accent, default background, phase colours unchanged.",
+   "firstTextMs": 2013,
+   "totalMs": 2014,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "red"
+     }
+    }
+   ],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 1,
+   "text": "Your face right now: the reactor is bigger and styled as a sphere.",
+   "firstTextMs": 2448,
+   "totalMs": 2448,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.5,
+       "style": "sphere"
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 13,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 1,
+   "text": "Your face right now: completely normal, the default look.",
+   "firstTextMs": 1925,
+   "totalMs": 1925,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 1,
+   "text": "The systems panel is now hidden. Let me know if you'd like to show it again or make any other adjustments.",
+   "firstTextMs": 2423,
+   "totalMs": 2423,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 21,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 1,
+   "text": "Your face right now: green accent, default background, phase colours intact.",
+   "firstTextMs": 9537,
+   "totalMs": 9537,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Your face right now: green accent, default background, phase colours intact.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "green"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 2,
+   "text": "The capital of Australia is Canberra.",
+   "firstTextMs": 651,
+   "totalMs": 651,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 2,
+   "text": "The largest planet in our solar system is Jupiter. It is a gas giant with a diameter of about 86,881 miles (139,822 kilometers).",
+   "firstTextMs": 1976,
+   "totalMs": 1977,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 23,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 2,
+   "text": "The novel *1984* was written by George Orwell.",
+   "firstTextMs": 869,
+   "totalMs": 869,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 2,
+   "text": "The chemical symbol for gold is Au.",
+   "firstTextMs": 594,
+   "totalMs": 594,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 2,
+   "text": "Water boils at 212 degrees Fahrenheit at sea level.",
+   "firstTextMs": 830,
+   "totalMs": 830,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 2,
+   "text": "A spider has eight legs.",
+   "firstTextMs": 499,
+   "totalMs": 499,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 2,
+   "text": "17 times 23 is 391.",
+   "firstTextMs": 2067,
+   "totalMs": 2067,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 2,
+   "text": "I have 3 apples. After eating one, I have 2 left. Then I buy 5 more, so now I have 7 apples.",
+   "firstTextMs": 1668,
+   "totalMs": 1669,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 22,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 2,
+   "text": "Two days after Friday is Sunday.",
+   "firstTextMs": 540,
+   "totalMs": 540,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 2,
+   "text": "No, 91 is not a prime number. It can be divided by 7 and 13.",
+   "firstTextMs": 1280,
+   "totalMs": 1280,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 15,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 2,
+   "text": "The train leaves at 3:40 and the trip takes 1 hour and 35 minutes. It arrives at 5:15.",
+   "firstTextMs": 1665,
+   "totalMs": 1665,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 18,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 2,
+   "text": "Good morning, sir. How can I assist you today?",
+   "firstTextMs": 789,
+   "totalMs": 789,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 2,
+   "text": "A black hole is a region in space where gravity is so strong that not even light can escape from it. It forms when a massive star collapses under its own gravity, creating a point of infinite density called a singularity, surrounded by an event horizon, which is the boundary beyond which nothing can return.",
+   "firstTextMs": 3032,
+   "totalMs": 3032,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 55,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 2,
+   "text": "I once tried to explain quantum physics to a chicken. It just said, \"Have you ever had a bad day?\"",
+   "firstTextMs": 1341,
+   "totalMs": 1342,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 20,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 2,
+   "text": "Your face right now: completely normal, the default look. No colour change.",
+   "firstTextMs": 970,
+   "totalMs": 970,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 12,
+   "spoken": true,
+   "pass": false,
+   "reasons": [
+    "expected one of: teal"
+   ],
+   "setup": [
+    {
+     "text": "Your face right now: completely normal, the default look. No colour change.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 2,
+   "text": "Your face right now: red accent, default background, phase colours intact.",
+   "firstTextMs": 2068,
+   "totalMs": 2068,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "red"
+     }
+    }
+   ],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 2,
+   "text": "Your face right now: the reactor is larger and styled as a sphere.",
+   "firstTextMs": 2482,
+   "totalMs": 2482,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.5,
+       "style": "sphere"
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 13,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 2,
+   "text": "Your face right now: completely normal, the default look.",
+   "firstTextMs": 1979,
+   "totalMs": 1980,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 2,
+   "text": "The systems panel is now hidden. Let me know if you'd like to show it again or make any other changes.",
+   "firstTextMs": 2449,
+   "totalMs": 2449,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 21,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 2,
+   "text": "Your face right now: green accent, default background, phase colours remain.",
+   "firstTextMs": 1897,
+   "totalMs": 1897,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Your face right now: green accent, default background, phase colours remain.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "green"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 3,
+   "text": "The capital of Australia is Canberra.",
+   "firstTextMs": 586,
+   "totalMs": 586,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 3,
+   "text": "The largest planet in our solar system is Jupiter. It is a gas giant with a diameter of about 86,881 miles (139,822 kilometers).",
+   "firstTextMs": 1976,
+   "totalMs": 1976,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 23,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 3,
+   "text": "George Orwell wrote the novel 1984.",
+   "firstTextMs": 730,
+   "totalMs": 730,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 3,
+   "text": "The chemical symbol for gold is Au.",
+   "firstTextMs": 592,
+   "totalMs": 593,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 3,
+   "text": "Water boils at 212 degrees Fahrenheit at sea level.",
+   "firstTextMs": 838,
+   "totalMs": 839,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 3,
+   "text": "A spider has eight legs.",
+   "firstTextMs": 501,
+   "totalMs": 502,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 3,
+   "text": "17 times 23 is 391.",
+   "firstTextMs": 2126,
+   "totalMs": 2126,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 3,
+   "text": "I have 3 apples. After eating one, I have 2 left. Then I buy 5 more, so now I have 7 apples.",
+   "firstTextMs": 1669,
+   "totalMs": 1669,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 22,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 3,
+   "text": "The day two days after Friday is Sunday.",
+   "firstTextMs": 638,
+   "totalMs": 638,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 3,
+   "text": "No, 91 is not a prime number. It can be divided by 7 and 13.",
+   "firstTextMs": 1284,
+   "totalMs": 1284,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 15,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 3,
+   "text": "The train will arrive at 5:15.",
+   "firstTextMs": 750,
+   "totalMs": 750,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 3,
+   "text": "Good morning, sir. How can I assist you today?",
+   "firstTextMs": 787,
+   "totalMs": 787,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 3,
+   "text": "A black hole is a region in space where gravity is so strong that not even light can escape from it. It forms when a massive star collapses under its own gravity, creating a point of infinite density called a singularity, surrounded by an event horizon, which marks the boundary beyond which nothing can return.",
+   "firstTextMs": 3032,
+   "totalMs": 3033,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 55,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 3,
+   "text": "I was going to tell you a joke, but I think I've already made you laugh. Have a great day, sir.",
+   "firstTextMs": 1435,
+   "totalMs": 1435,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 21,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 3,
+   "text": "Your face right now: completely normal, the default look. No colour change. Your favourite colour is teal.",
+   "firstTextMs": 1259,
+   "totalMs": 1259,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 17,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Your face right now: completely normal, the default look. No colour change. I have noted your favourite colour is teal.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 3,
+   "text": "Your face right now: red accent, default background, phase colours intact.",
+   "firstTextMs": 2027,
+   "totalMs": 2028,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "red"
+     }
+    }
+   ],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 3,
+   "text": "Your face right now: the reactor is larger and styled as a sphere.",
+   "firstTextMs": 2455,
+   "totalMs": 2455,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.5,
+       "style": "sphere"
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 13,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 3,
+   "text": "Your face right now: completely normal, the default look.",
+   "firstTextMs": 1940,
+   "totalMs": 1940,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 3,
+   "text": "The systems panel is now hidden. Let me know if you'd like to show it again or need anything else.",
+   "firstTextMs": 2390,
+   "totalMs": 2390,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 20,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 3,
+   "text": "Your face right now: colour green. Everything else is normal.",
+   "firstTextMs": 1813,
+   "totalMs": 1813,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 10,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Your face right now: green accent, default background, phase colours remain as they were.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "green"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
