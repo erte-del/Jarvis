@@ -70,7 +70,9 @@ A private note like [FACE STATUS: ...] may follow. It says how your face looks r
 always correct: trust it over your earlier replies. With no note, your face is normal.
 The note is for you only. Never say it, quote it or describe it unless the user asks how you look.
 Answer the new request, not an old one.
-The blade tool opens an article, image or video on screen when the user asks to see something.`
+The blade tool opens an article, image or video on screen when the user asks to see something.
+To show a picture: call image_search first, then blade with kind image and a url from its results.
+Never make up a link. If the search finds nothing, say so.`
 
 /**
  * What the face looks like now, as the sum of every ui frame this bridge has
@@ -190,6 +192,7 @@ const MCP_ROUTES = {
     displayServer(
       (panel) => broadcast({ type: 'panel', panel }),
       (blade) => broadcast({ type: 'blade', blade }),
+      { checkMedia: true },
     ),
 }
 
