@@ -31,9 +31,12 @@ Start them in this order. OpenJarvis looks for the face's tools only when it sta
    ollama pull qwen3:8b
    ```
 
+   Keep the Ollama app running (on a Mac, the llama icon in the menu bar).
+
 2. **The face** (terminal 1):
 
    ```bash
+   cd ~/Documents/GitHub/Jarvis   # the folder you cloned the project into
    cd face
    npm install
    JARVIS_BRAIN=openjarvis npm start
@@ -44,12 +47,21 @@ Start them in this order. OpenJarvis looks for the face's tools only when it sta
 3. **The brain** (terminal 2):
 
    ```bash
+   cd ~/Documents/GitHub/Jarvis   # the folder you cloned the project into
    cd brain
    uv sync --extra server
    OPENJARVIS_CONFIG=../config/openjarvis.toml uv run jarvis serve -e ollama -m qwen3:8b
    ```
 
    `config/openjarvis.toml` connects OpenJarvis to the face's tools.
+   Wait for `Uvicorn running` before you open the page.
+
+   To let qwen think before it answers, put `OPENJARVIS_THINK=1 ` at the start of the last line.
+   It gets more reasoning questions right, but answers take about 13 seconds instead of 1
+   (see [RESULTS.md](RESULTS.md)).
+
+   `npm install` and `uv sync --extra server` are safe to run every time. They only install
+   what is missing, so they are quick after the first run. Run them again after every pull.
 
 4. Open http://localhost:5173 in Chrome. Click **INITIALISE**. Say **"Hey Jarvis"**.
    Try: "Hey Jarvis, turn yourself red."
