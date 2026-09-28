@@ -5,6 +5,9 @@ Merging OpenJarvis + adewaskar/jarvis to try and make better Jarvis.
 OpenJarvis is the brain. adewaskar/jarvis is the holographic face. A small
 bridge connects the face to the OpenJarvis brain.
 
+**Results:** how a local model (qwen3:8b) compares with Claude behind the same
+face, measured over 38 questions: see [RESULTS.md](RESULTS.md).
+
 ## Layout
 
 | Folder | What it is | From |
