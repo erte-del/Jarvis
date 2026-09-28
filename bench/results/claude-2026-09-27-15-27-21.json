@@ -1,0 +1,1266 @@
+{
+ "brain": "claude",
+ "model": "claude-opus-5",
+ "agent": "claude-code",
+ "date": "2026-09-27T15:27:21.012Z",
+ "runs": 3,
+ "machine": {
+  "platform": "darwin",
+  "release": "25.6.0",
+  "arch": "arm64",
+  "cpu": "Apple M5",
+  "memoryGB": 24
+ },
+ "results": [
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 1,
+   "text": "Canberra, sir.",
+   "firstTextMs": 3263,
+   "totalMs": 3542,
+   "costUsd": 0.260593,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 1,
+   "text": "Jupiter, sir — about eleven times Earth's diameter, and more massive than every other planet combined.",
+   "firstTextMs": 1687,
+   "totalMs": 2391,
+   "costUsd": 0.04516149999999999,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 16,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 1,
+   "text": "George Orwell, sir, published in nineteen forty-nine.",
+   "firstTextMs": 12675,
+   "totalMs": 13574,
+   "costUsd": 0.0427395,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 1,
+   "text": "Gold is Au, sir — from the Latin aurum.",
+   "firstTextMs": 2735,
+   "totalMs": 3141,
+   "costUsd": 0.0426845,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 1,
+   "text": "Two hundred and twelve degrees Fahrenheit, sir.",
+   "firstTextMs": 2512,
+   "totalMs": 2866,
+   "costUsd": 0.0429135,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 1,
+   "text": "Eight, sir.",
+   "firstTextMs": 1333,
+   "totalMs": 1889,
+   "costUsd": 0.0423595,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 1,
+   "text": "Three hundred and ninety-one, sir.",
+   "firstTextMs": 2207,
+   "totalMs": 3075,
+   "costUsd": 0.0446505,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 1,
+   "text": "Seven, sir.",
+   "firstTextMs": 2074,
+   "totalMs": 2966,
+   "costUsd": 0.0425355,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 1,
+   "text": "Sunday, sir.",
+   "firstTextMs": 2048,
+   "totalMs": 2587,
+   "costUsd": 0.044489499999999994,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 1,
+   "text": "No, sir — ninety-one is seven times thirteen.",
+   "firstTextMs": 2845,
+   "totalMs": 3277,
+   "costUsd": 0.0426595,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 1,
+   "text": "Five fifteen, sir.",
+   "firstTextMs": 1808,
+   "totalMs": 2758,
+   "costUsd": 0.0448095,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 1,
+   "text": "Good morning, sir.",
+   "firstTextMs": 1873,
+   "totalMs": 2737,
+   "costUsd": 0.0423885,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 1,
+   "text": "A black hole is a region where gravity is so strong that nothing, not even light, can escape it — the collapsed remains of a massive star, compressed past the point where any known force can hold it up. Cross its edge, the event horizon, and every possible path leads inward, sir.",
+   "firstTextMs": 1188,
+   "totalMs": 2371,
+   "costUsd": 0.044284500000000004,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 52,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 1,
+   "text": "A man told me I should never trust atoms, sir. They make up everything.",
+   "firstTextMs": 1974,
+   "totalMs": 3371,
+   "costUsd": 0.0427025,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 14,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 1,
+   "text": "Teal, sir.",
+   "firstTextMs": 902,
+   "totalMs": 1285,
+   "costUsd": 0.33186150000000003,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Noted, sir. Teal it is.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 1,
+   "text": "Done, sir.",
+   "firstTextMs": 18978,
+   "totalMs": 19384,
+   "costUsd": 0.0866695,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "#ff2d2d"
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 1,
+   "text": "Larger, sir.",
+   "firstTextMs": 2831,
+   "totalMs": 2921,
+   "costUsd": 0.0866105,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.8
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 1,
+   "text": "Done, sir.",
+   "firstTextMs": 6847,
+   "totalMs": 6954,
+   "costUsd": 0.0907265,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 1,
+   "text": "Done, sir.",
+   "firstTextMs": 4939,
+   "totalMs": 5047,
+   "costUsd": 0.0907985,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 1,
+   "text": "Back to stock, sir.",
+   "firstTextMs": 4531,
+   "totalMs": 4636,
+   "costUsd": 0.2158985,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Green, sir.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "#2bff88"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 2,
+   "text": "Canberra, sir.",
+   "firstTextMs": 1399,
+   "totalMs": 1877,
+   "costUsd": 0.0138305,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 2,
+   "text": "Jupiter is the largest planet in the solar system, sir — some eleven times Earth's diameter, and more massive than all the other planets combined.",
+   "firstTextMs": 1208,
+   "totalMs": 1937,
+   "costUsd": 0.0433565,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 25,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 2,
+   "text": "George Orwell, sir — the pen name of Eric Arthur Blair, published in nineteen forty-nine.",
+   "firstTextMs": 2736,
+   "totalMs": 3632,
+   "costUsd": 0.045234500000000004,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 15,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 2,
+   "text": "Gold is Au, sir.",
+   "firstTextMs": 2249,
+   "totalMs": 2922,
+   "costUsd": 0.044559499999999995,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 2,
+   "text": "Two hundred and twelve degrees Fahrenheit, sir.",
+   "firstTextMs": 1815,
+   "totalMs": 2888,
+   "costUsd": 0.014247500000000001,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 2,
+   "text": "Eight, sir.",
+   "firstTextMs": 2087,
+   "totalMs": 3106,
+   "costUsd": 0.013821500000000002,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 2,
+   "text": "Three hundred and ninety-one, sir.",
+   "firstTextMs": 21609,
+   "totalMs": 27764,
+   "costUsd": 0.042550500000000005,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 2,
+   "text": "Seven, sir.",
+   "firstTextMs": 2081,
+   "totalMs": 3099,
+   "costUsd": 0.0446255,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 2,
+   "text": "Sunday, sir.",
+   "firstTextMs": 1223,
+   "totalMs": 1614,
+   "costUsd": 0.0423945,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 2,
+   "text": "No, sir — ninety-one is seven times thirteen.",
+   "firstTextMs": 3480,
+   "totalMs": 4352,
+   "costUsd": 0.04475950000000001,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 2,
+   "text": "Five fifteen, sir.",
+   "firstTextMs": 2140,
+   "totalMs": 3099,
+   "costUsd": 0.01402,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 2,
+   "text": "Good morning, sir.",
+   "firstTextMs": 1189,
+   "totalMs": 1693,
+   "costUsd": 0.013821,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 2,
+   "text": "A region where gravity is so strong that nothing escapes it, not even light.\n\nIt forms when matter collapses past a point of no return — the event horizon. Cross that boundary and every path leads inward, sir.",
+   "firstTextMs": 4022,
+   "totalMs": 6125,
+   "costUsd": 0.015246500000000001,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 38,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 2,
+   "text": "A man walks into a library and asks for a book on reverse psychology. The librarian says, \"Don't read it, sir.\"",
+   "firstTextMs": 1745,
+   "totalMs": 3121,
+   "costUsd": 0.014554000000000001,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 21,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 2,
+   "text": "Teal, sir.",
+   "firstTextMs": 957,
+   "totalMs": 1431,
+   "costUsd": 0.10254549999999998,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Noted, sir. Teal it is.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 2,
+   "text": "Very good, sir.",
+   "firstTextMs": 5420,
+   "totalMs": 5903,
+   "costUsd": 0.028896500000000002,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "#ff2d2d"
+     }
+    }
+   ],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 2,
+   "text": "Bigger, sir.",
+   "firstTextMs": 4819,
+   "totalMs": 4977,
+   "costUsd": 0.0581215,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.9
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 2,
+   "text": "Very good, sir.",
+   "firstTextMs": 4768,
+   "totalMs": 5066,
+   "costUsd": 0.029016,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 2,
+   "text": "Done, sir.",
+   "firstTextMs": 3713,
+   "totalMs": 3816,
+   "costUsd": 0.08659850000000001,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 2,
+   "text": "Restored, sir.",
+   "firstTextMs": 3209,
+   "totalMs": 3298,
+   "costUsd": 0.2202585,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Green, sir.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "#2bff88"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 3,
+   "text": "Canberra, sir.",
+   "firstTextMs": 1675,
+   "totalMs": 2357,
+   "costUsd": 0.0444735,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 3,
+   "text": "Jupiter is the largest planet in our solar system, sir — some eleven times the diameter of Earth.",
+   "firstTextMs": 1789,
+   "totalMs": 3267,
+   "costUsd": 0.014599999999999998,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 18,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 3,
+   "text": "George Orwell, sir — the pen name of Eric Arthur Blair, published in nineteen forty-nine.",
+   "firstTextMs": 1955,
+   "totalMs": 2580,
+   "costUsd": 0.0145775,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 15,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 3,
+   "text": "Gold is Au, sir.",
+   "firstTextMs": 1980,
+   "totalMs": 2937,
+   "costUsd": 0.013998,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 3,
+   "text": "Two hundred and twelve degrees Fahrenheit, sir.",
+   "firstTextMs": 2604,
+   "totalMs": 3117,
+   "costUsd": 0.044998500000000004,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 3,
+   "text": "Eight, sir.",
+   "firstTextMs": 6214,
+   "totalMs": 7076,
+   "costUsd": 0.0444495,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 3,
+   "text": "Three hundred and ninety-one, sir.",
+   "firstTextMs": 1826,
+   "totalMs": 2073,
+   "costUsd": 0.014022,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 3,
+   "text": "Seven, sir.",
+   "firstTextMs": 1169,
+   "totalMs": 1585,
+   "costUsd": 0.0138455,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 3,
+   "text": "Sunday, sir.",
+   "firstTextMs": 2583,
+   "totalMs": 3243,
+   "costUsd": 0.013947000000000001,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 3,
+   "text": "No, sir. Ninety-one is seven times thirteen.",
+   "firstTextMs": 1836,
+   "totalMs": 2998,
+   "costUsd": 0.0142515,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 3,
+   "text": "Five fifteen, sir.",
+   "firstTextMs": 1888,
+   "totalMs": 2483,
+   "costUsd": 0.0427095,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 3,
+   "text": "Good morning, sir.",
+   "firstTextMs": 2337,
+   "totalMs": 3169,
+   "costUsd": 0.013821,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 3,
+   "text": "A black hole is a region where matter has collapsed so densely that escaping it would require exceeding the speed of light, which nothing can do. The boundary is the event horizon — cross it, and every path forward leads inward, sir.",
+   "firstTextMs": 1385,
+   "totalMs": 2434,
+   "costUsd": 0.015396500000000002,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 42,
+   "spoken": true,
+   "pass": false,
+   "reasons": [
+    "expected one of: gravity, gravitational"
+   ],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 3,
+   "text": "A man told me I'd never make a wheel. I said, that's how I roll, sir.",
+   "firstTextMs": 1185,
+   "totalMs": 2144,
+   "costUsd": 0.0449325,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 16,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 3,
+   "text": "Teal, sir.",
+   "firstTextMs": 821,
+   "totalMs": 1276,
+   "costUsd": 0.080535,
+   "tools": [],
+   "ui": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Noted, sir. Teal it is.",
+     "error": null,
+     "ui": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 3,
+   "text": "Red, sir.",
+   "firstTextMs": 5266,
+   "totalMs": 5718,
+   "costUsd": 0.09086949999999999,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "#ff2d2d"
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 3,
+   "text": "Bigger, sir.",
+   "firstTextMs": 6619,
+   "totalMs": 6906,
+   "costUsd": 0.0908405,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.8
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 3,
+   "text": "Done, sir.",
+   "firstTextMs": 4799,
+   "totalMs": 4915,
+   "costUsd": 0.028985999999999998,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 3,
+   "text": "Done, sir.",
+   "firstTextMs": 3856,
+   "totalMs": 3936,
+   "costUsd": 0.028772,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 3,
+   "text": "Restored, sir.",
+   "firstTextMs": 2247,
+   "totalMs": 2363,
+   "costUsd": 0.1897445,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "setup": [
+    {
+     "text": "Done, sir.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "#2dff88"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

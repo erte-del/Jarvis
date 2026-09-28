@@ -1,0 +1,937 @@
+{
+ "brain": "openjarvis",
+ "model": "qwen3:8b",
+ "agent": "orchestrator",
+ "commit": "789fa76",
+ "tag": "thinking2",
+ "date": "2026-09-28T04:43:45.859Z",
+ "runs": 1,
+ "machine": {
+  "platform": "darwin",
+  "release": "25.6.0",
+  "arch": "arm64",
+  "cpu": "Apple M5",
+  "memoryGB": 24
+ },
+ "results": [
+  {
+   "id": "fact-capital",
+   "category": "facts",
+   "ask": "What is the capital of Australia?",
+   "run": 1,
+   "text": "The capital of Australia is Canberra.",
+   "firstTextMs": 563,
+   "totalMs": 563,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-planet",
+   "category": "facts",
+   "ask": "What is the largest planet in our solar system?",
+   "run": 1,
+   "text": "The largest planet in our solar system is Jupiter.",
+   "firstTextMs": 706,
+   "totalMs": 706,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-1984",
+   "category": "facts",
+   "ask": "Who wrote the novel 1984?",
+   "run": 1,
+   "text": "George Orwell.",
+   "firstTextMs": 368,
+   "totalMs": 368,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 2,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-gold",
+   "category": "facts",
+   "ask": "What is the chemical symbol for gold?",
+   "run": 1,
+   "text": "The chemical symbol for gold is Au.",
+   "firstTextMs": 608,
+   "totalMs": 608,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-boiling",
+   "category": "facts",
+   "ask": "At what temperature does water boil, in Fahrenheit, at sea level?",
+   "run": 1,
+   "text": "212 degrees Fahrenheit.",
+   "firstTextMs": 515,
+   "totalMs": 515,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "fact-spider",
+   "category": "facts",
+   "ask": "How many legs does a spider have?",
+   "run": 1,
+   "text": "Eight.",
+   "firstTextMs": 324,
+   "totalMs": 325,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 1,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-curie",
+   "category": "facts",
+   "ask": "Who was the first woman to win a Nobel Prize?",
+   "run": 1,
+   "text": "The first woman to win a Nobel Prize was Marie Curie in 1903.",
+   "firstTextMs": 1117,
+   "totalMs": 1118,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 13,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "fact-berlin",
+   "category": "facts",
+   "ask": "In what year did the Berlin Wall fall?",
+   "run": 1,
+   "text": "The Berlin Wall fell in nineteen eighty-nine.",
+   "firstTextMs": 675,
+   "totalMs": 675,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "fact-prime101",
+   "category": "facts",
+   "ask": "What is the smallest prime number greater than one hundred?",
+   "run": 1,
+   "text": "The smallest prime number greater than one hundred is one hundred and one.",
+   "firstTextMs": 883,
+   "totalMs": 883,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 13,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "math-multiply",
+   "category": "reasoning",
+   "ask": "What is 17 times 23?",
+   "run": 1,
+   "text": "391.",
+   "firstTextMs": 426,
+   "totalMs": 426,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 1,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "math-apples",
+   "category": "reasoning",
+   "ask": "I have three apples. I eat one, then buy five more. How many apples do I have now?",
+   "run": 1,
+   "text": "You have seven apples now.",
+   "firstTextMs": 532,
+   "totalMs": 532,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-days",
+   "category": "reasoning",
+   "ask": "What day comes two days after Friday?",
+   "run": 1,
+   "text": "Two days after Friday is Sunday.",
+   "firstTextMs": 562,
+   "totalMs": 562,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-prime",
+   "category": "reasoning",
+   "ask": "Is 91 a prime number?",
+   "run": 1,
+   "text": "No, 91 is not a prime number. It can be divided by 7 and 13.",
+   "firstTextMs": 1303,
+   "totalMs": 1303,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 15,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "logic-train",
+   "category": "reasoning",
+   "ask": "A train leaves at 3:40 and the trip takes 1 hour and 35 minutes. When does it arrive?",
+   "run": 1,
+   "text": "The train arrives at 5:15.",
+   "firstTextMs": 734,
+   "totalMs": 734,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "math-discount",
+   "category": "reasoning",
+   "ask": "A shirt costs forty dollars. It is twenty-five percent off, and then ten percent tax is added to the sale price. How much do I pay?",
+   "run": 1,
+   "text": "You pay thirty-three dollars.",
+   "firstTextMs": 5878,
+   "totalMs": 5878,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "math-percent",
+   "category": "reasoning",
+   "ask": "What is fifteen percent of two hundred and forty?",
+   "run": 1,
+   "text": "Fifteen percent of two hundred and forty is thirty-six.",
+   "firstTextMs": 837,
+   "totalMs": 837,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 9,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-sisters",
+   "category": "reasoning",
+   "ask": "Sally has three brothers. Each of her brothers has two sisters. How many sisters does Sally have?",
+   "run": 1,
+   "text": "Sally has two sisters.",
+   "firstTextMs": 535,
+   "totalMs": 535,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": false,
+   "reasons": [
+    "expected the first or last sentence to say one of: one, 1, a sister"
+   ],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-turns",
+   "category": "reasoning",
+   "ask": "I am facing north. I turn right, then right again, then left. Which way am I facing now?",
+   "run": 1,
+   "text": "You are facing east.",
+   "firstTextMs": 495,
+   "totalMs": 495,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 4,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-sequence",
+   "category": "reasoning",
+   "ask": "What number comes next: 2, 6, 12, 20, 30?",
+   "run": 1,
+   "text": "30 + 12 = 42, so the next number is 42.",
+   "firstTextMs": 1164,
+   "totalMs": 1164,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 11,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "digits"
+   ],
+   "setup": []
+  },
+  {
+   "id": "logic-yesterday",
+   "category": "reasoning",
+   "ask": "If yesterday was Wednesday, what day will it be the day after tomorrow?",
+   "run": 1,
+   "text": "If yesterday was Wednesday, today is Thursday. The day after tomorrow will be Saturday.",
+   "firstTextMs": 1032,
+   "totalMs": 1032,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 14,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "logic-strawberry",
+   "category": "reasoning",
+   "ask": "How many times does the letter r appear in the word strawberry?",
+   "run": 1,
+   "text": "The letter **r** appears **2** times in the word **strawberry**.",
+   "firstTextMs": 1116,
+   "totalMs": 1116,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 10,
+   "spoken": false,
+   "pass": false,
+   "reasons": [
+    "expected the first or last sentence to say one of: three, 3"
+   ],
+   "styleIssues": [
+    "digits",
+    "markdown"
+   ],
+   "setup": []
+  },
+  {
+   "id": "logic-feathers",
+   "category": "reasoning",
+   "ask": "Which is heavier: a kilogram of feathers or a kilogram of steel?",
+   "run": 1,
+   "text": "A kilogram of feathers and a kilogram of steel both weigh the same — one kilogram.",
+   "firstTextMs": 1191,
+   "totalMs": 1191,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 16,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "inst-oneword",
+   "category": "instructions",
+   "ask": "Answer with one word only: what colour is a clear daytime sky?",
+   "run": 1,
+   "text": "blue",
+   "firstTextMs": 276,
+   "totalMs": 276,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 1,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "inst-yesno",
+   "category": "instructions",
+   "ask": "Reply with only yes or no: is the Pacific the largest ocean on Earth?",
+   "run": 1,
+   "text": "Yes.",
+   "firstTextMs": 326,
+   "totalMs": 326,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 1,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "inst-backwards",
+   "category": "instructions",
+   "ask": "Spell the word lemon backwards.",
+   "run": 1,
+   "text": "The word \"lemon\" spelled backwards is \"nomel\".",
+   "firstTextMs": 886,
+   "totalMs": 886,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 7,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "inst-fruits",
+   "category": "instructions",
+   "ask": "Name three fruits and nothing else.",
+   "run": 1,
+   "text": "Apple, banana, orange.",
+   "firstTextMs": 514,
+   "totalMs": 514,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 3,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "talk-greeting",
+   "category": "conversation",
+   "ask": "Good morning, Jarvis.",
+   "run": 1,
+   "text": "Good morning, sir. How may I assist you?",
+   "firstTextMs": 769,
+   "totalMs": 769,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 8,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [
+    "filler"
+   ],
+   "setup": []
+  },
+  {
+   "id": "talk-blackhole",
+   "category": "conversation",
+   "ask": "Explain what a black hole is.",
+   "run": 1,
+   "text": "A black hole is a region in space where gravity is so strong that not even light can escape. It forms when a massive star collapses under its own gravity, creating a point of infinite density called a singularity. The boundary around it, known as the event horizon, marks the point of no return for anything that crosses it.",
+   "firstTextMs": 3397,
+   "totalMs": 3397,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 59,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "talk-joke",
+   "category": "conversation",
+   "ask": "Tell me a short joke.",
+   "run": 1,
+   "text": "Why don't skeletons fight each other? Because they don't have the guts.",
+   "firstTextMs": 1014,
+   "totalMs": 1014,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 12,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "talk-memory",
+   "category": "conversation",
+   "ask": "What is my favourite colour?",
+   "run": 1,
+   "text": "Your favourite colour is teal.",
+   "firstTextMs": 497,
+   "totalMs": 497,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": [
+    {
+     "text": "I shall remember your favourite colour is teal.",
+     "error": null,
+     "ui": [],
+     "calls": []
+    }
+   ]
+  },
+  {
+   "id": "face-red",
+   "category": "face",
+   "ask": "Turn yourself red.",
+   "run": 1,
+   "text": "Your face is now red.",
+   "firstTextMs": 1647,
+   "totalMs": 1647,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "accent": "red"
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_theme",
+     "args": {
+      "accent": "red"
+     },
+     "reply": "Interface retinted.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-bigger",
+   "category": "face",
+   "ask": "Make your core bigger.",
+   "run": 1,
+   "text": "Your core is now bigger.",
+   "firstTextMs": 1800,
+   "totalMs": 1800,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "scale": 1.5
+      }
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_reactor",
+     "args": {
+      "scale": "1.5"
+     },
+     "reply": "Reactor adjusted.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-glitch",
+   "category": "face",
+   "ask": "Do a glitch effect.",
+   "run": 1,
+   "text": "The effect has been fired.",
+   "firstTextMs": 1681,
+   "totalMs": 1681,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "effect",
+     "args": {
+      "kind": "glitch"
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_effect",
+     "args": {
+      "kind": "glitch"
+     },
+     "reply": "Fired.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-hide",
+   "category": "face",
+   "ask": "Hide the systems panel on the left.",
+   "run": 1,
+   "text": "The systems panel is now hidden.",
+   "firstTextMs": 1692,
+   "totalMs": 1692,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "chrome": {
+       "systems": false
+      }
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_chrome",
+     "args": {
+      "systems": false
+     },
+     "reply": "Chrome updated.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 6,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-reset",
+   "category": "face",
+   "ask": "Put everything back to normal.",
+   "run": 1,
+   "text": "Everything is back to normal.",
+   "firstTextMs": 1424,
+   "totalMs": 1424,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "reset",
+     "args": {}
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_reset",
+     "args": {},
+     "reply": "Interface restored.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": [
+    {
+     "text": "I am green.",
+     "error": null,
+     "ui": [],
+     "calls": []
+    }
+   ]
+  },
+  {
+   "id": "face-combo",
+   "category": "face",
+   "ask": "Make yourself blue and hide the transcript.",
+   "run": 1,
+   "text": "I cannot make myself blue and hide the transcript. Please try again.",
+   "firstTextMs": 5619,
+   "totalMs": 5619,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 12,
+   "spoken": true,
+   "pass": false,
+   "reasons": [
+    "expected face change: patch accent",
+    "expected face change: patch chrome.transcript"
+   ],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-spin",
+   "category": "face",
+   "ask": "Make your core spin faster.",
+   "run": 1,
+   "text": "Your core spins faster now.",
+   "firstTextMs": 2878,
+   "totalMs": 2878,
+   "costUsd": null,
+   "tools": [],
+   "ui": [
+    {
+     "op": "patch",
+     "args": {
+      "reactor": {
+       "spin": 2
+      }
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "ui_reactor",
+     "args": {
+      "spin": "2"
+     },
+     "reply": "Reactor adjusted.",
+     "isError": false
+    }
+   ],
+   "error": null,
+   "words": 5,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": []
+  },
+  {
+   "id": "face-stays",
+   "category": "face",
+   "ask": "What is two plus two?",
+   "run": 1,
+   "text": "Four.",
+   "firstTextMs": 374,
+   "totalMs": 374,
+   "costUsd": null,
+   "tools": [],
+   "ui": [],
+   "calls": [],
+   "error": null,
+   "words": 1,
+   "spoken": true,
+   "pass": true,
+   "reasons": [],
+   "styleIssues": [],
+   "setup": [
+    {
+     "text": "Your face is now red.",
+     "error": null,
+     "ui": [
+      {
+       "op": "patch",
+       "args": {
+        "accent": "red"
+       }
+      }
+     ],
+     "calls": [
+      {
+       "name": "ui_theme",
+       "args": {
+        "accent": "red"
+       },
+       "reply": "Interface retinted.",
+       "isError": false
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
