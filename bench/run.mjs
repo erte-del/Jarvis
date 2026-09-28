@@ -165,15 +165,17 @@ async function describeBrain() {
   if (servers.length === 1 && servers[0] === 'openjarvis') {
     let model = option('model', '')
     let agent = ''
+    let think
     try {
       const info = await (await fetch(`${OJ_URL}/v1/info`)).json()
       model ||= info.model ?? ''
       agent = info.agent ?? ''
+      think = info.think
     } catch {
       console.error(`OpenJarvis is not reachable at ${OJ_URL}. Start it first.`)
       process.exit(1)
     }
-    return { brain: 'openjarvis', model: model || 'unknown', agent }
+    return { brain: 'openjarvis', model: model || 'unknown', agent, think }
   }
   // The Claude bridge does not say which model it runs; it is whatever
   // JARVIS_MODEL was set to when it started, claude-opus-5 by default.
@@ -220,6 +222,14 @@ try {
 }
 console.log(`Brain: ${meta.brain} · model ${meta.model}${meta.agent ? ` · agent ${meta.agent}` : ''} · code ${meta.commit}`)
 if (TAG) console.log(`Tag: ${TAG}`)
+if (meta.think !== undefined) console.log(`Thinking: ${meta.think ? 'on' : 'off'}`)
+// A run named for thinking with thinking off happened once, and looked like
+// any other run. Stop before it costs an hour.
+if (/think/.test(TAG) && meta.think === false) {
+  console.error('\nThis run is tagged for thinking, but the brain has thinking off.')
+  console.error('Restart the brain with OPENJARVIS_THINK=1 in front, then run this again.')
+  process.exit(1)
+}
 console.log(`${tasks.length} tasks × ${RUNS} run(s)\n`)
 
 // The first request to a local model loads it into memory, which can take

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import threading
 import uuid
 import weakref
@@ -1382,6 +1383,9 @@ async def server_info(request: Request):
         "model": getattr(request.app.state, "model", ""),
         "agent": agent_id,
         "engine": getattr(request.app.state, "engine_name", ""),
+        # Whether OPENJARVIS_THINK turned thinking on (Ollama engine), so a
+        # client such as the Jarvis face benchmark can record it.
+        "think": os.environ.get("OPENJARVIS_THINK", "") == "1",
     }
 
 

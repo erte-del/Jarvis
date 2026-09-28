@@ -13,5 +13,8 @@ the same Apple M5 laptop with 24 GB of memory.
 | `openjarvis-improved-2026-09-27-17-41-26.json` | qwen3:8b, first rewrite of the instructions | **Not a fair test.** The number examples in the instructions were answers to four test questions (391, 5:15, 1989, $33), and the face-command examples read like a to-do list: once, qwen ran them all on a maths question. |
 | `openjarvis-thinking-2026-09-27-18-45-06.json` | Same instructions, thinking on | Same unfair instructions. Thinking also used up the 1,024-token budget on some questions and returned nothing. |
 
-Later runs use instructions checked for overlap with the test questions, and a
+| `openjarvis-improved2-2026-09-28-04-40-48.json` | qwen3:8b, second rewrite (789fa76) | Fair. Style much better than the original (91 v. 70 of 114 answers with no style problem). Two questions got worse: fifteen percent of 240 (0 of 3, was 9 of 9 over three baseline runs) and lemon backwards (1 of 3, was 9 of 9). Likely cause: the new "give the answer first" rule stops qwen working the answer out. That rule was removed afterwards. |
+| `openjarvis-thinking2-2026-09-28-04-43-45.json` | Meant as thinking on, 789fa76 | **Thinking was not on**: the brain was not restarted with `OPENJARVIS_THINK=1`. Same speed as improved2 (0.8 s). Treat it as one more improved2 run. Runs since record thinking on or off, and a run tagged for thinking refuses to start with it off. |
+
+Instructions from 789fa76 on are checked for overlap with the test questions, and ask for a
 4,096-token budget.
