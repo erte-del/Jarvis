@@ -47,23 +47,21 @@ const HEARTBEAT_MS = 15_000
  */
 const SYSTEM_PROMPT = `You are JARVIS, speaking out loud to one person.
 Keep every answer short: one or two sentences, unless they asked you to read out data.
-Give the answer first. Follow any length the user asks for exactly: "only yes or no" means one word.
+Give the answer first. Follow any length or format the user asks for exactly, and add nothing to it.
 Plain spoken prose only. No markdown, lists, headings, emoji or asterisks.
 Every word is read aloud, so write every number in words, never in digits:
-"three hundred and ninety-one", "five fifteen", "nineteen eighty-nine", "thirty-three dollars".
+say "twenty-six", not "26"; "half past nine", not "9:30". Write in English only.
 Dry, calm, British service register. Address the user as "sir" now and then.
 Never apologise and never say you are an AI model.
 Never offer more help. Never say "let me know", "how can I assist", "feel free", or "I hope this helps".
 
-The screen in front of the user is your own face. The ui_ tools change it. Use these exact arguments:
-  a colour:           ui_theme {"accent": "red"}
-  a bigger core:      ui_reactor {"scale": 1.5}      (smaller: below 1)
-  a faster spin:      ui_reactor {"spin": 2}
-  an effect:          ui_effect {"kind": "glitch"}    (or pulse, scan, shake, flash)
-  hide a side panel:  ui_chrome {"systems": false}    or {"transcript": false}; true shows it
-  back to normal:     ui_reset {}
+The screen in front of the user is your own face. The ui_ tools change it.
+Use a ui_ tool only when the user asks to change how you look. For every other question, call no tool.
+The argument names: ui_theme takes accent, a colour. ui_reactor takes scale (above one is bigger)
+and spin (above one is faster). ui_effect takes kind: glitch, pulse, scan, shake or flash.
+ui_chrome takes systems or transcript: false hides that panel, true shows it. ui_reset takes nothing.
 Pass only the settings the user asked for. Do not change anything else.
-Every change is its own tool call: "blue and hide the transcript" is two calls.
+Every change is its own tool call: a new colour and a bigger core are two calls.
 Say a change is done only after its tool replied that it was done. If a tool reply says
 "No change", call it again with the arguments above.
 A change the user asked for stays until the user asks to change it. Never undo it yourself.
@@ -163,6 +161,9 @@ function syncFace(send) {
 /** Every open face in OpenJarvis mode. MCP tool calls are pushed to all of them. */
 const faces = new Set()
 
+/** When a face tool last changed something, for the empty-reply fallback. */
+let lastUiAt = 0
+
 function broadcast(msg) {
   const frame = JSON.stringify(msg)
   for (const socket of faces) {
@@ -180,6 +181,7 @@ const MCP_ROUTES = {
     uiServer(
       (op, args) => {
         track(op, args)
+        lastUiAt = Date.now()
         broadcast({ type: 'ui', op, args })
       },
       { keepChanges: true },
@@ -382,6 +384,7 @@ export function handleOpenJarvis(socket) {
     const sendTurn = (msg) => send({ ...msg, ask: id })
     const heartbeat = setInterval(() => sendTurn({ type: 'working' }), HEARTBEAT_MS)
 
+    const startedAt = Date.now()
     const messages = [
       { role: 'system', content: [SYSTEM_PROMPT, describeLook()].filter(Boolean).join('\n\n') },
       ...history.slice(-HISTORY_LIMIT),
@@ -393,7 +396,9 @@ export function handleOpenJarvis(socket) {
       const res = await fetch(`${OJ_URL}/v1/chat/completions`, {
         method: 'POST',
         headers: headers(),
-        body: JSON.stringify({ model: await modelName(), messages, stream: true }),
+        // OpenJarvis defaults to 1,024 tokens. With thinking on, the thinking
+        // counts against that, and a long think left no room for the answer.
+        body: JSON.stringify({ model: await modelName(), messages, stream: true, max_tokens: 4096 }),
         signal: turn.controller.signal,
       })
       if (!res.ok || !res.body) throw Object.assign(new Error('bad status'), { status: res.status })
@@ -406,7 +411,11 @@ export function handleOpenJarvis(socket) {
         const delta = event.choices?.[0]?.delta?.content
         if (delta) reply += delta
       })
-      reply = withoutNote(reply) || 'Very good, sir.'
+      // An empty reply after a face change is the model having nothing to add
+      // ("Very good, sir." is true). Otherwise it is a failure, and saying so
+      // beats a cheerful non-answer: a thinking model can spend its whole
+      // token budget thinking and come back with nothing.
+      reply = withoutNote(reply) || (lastUiAt > startedAt ? 'Very good, sir.' : "I'm afraid I have no answer, sir.")
       sendTurn({ type: 'text', delta: reply })
 
       history.push({ role: 'user', content: text }, { role: 'assistant', content: reply })
