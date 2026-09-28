@@ -313,11 +313,60 @@ the bytes — it does not know whether the user asked to read this or merely to
 see it, what is already on screen, or whether the point was the picture or the
 argument. You know those things. Overrule it whenever you have reason to.`
 
+const IMAGE_SEARCH_DESCRIPTION = `Find real photos of something, from Wikimedia Commons.
+
+Returns up to the requested number of pictures, each with a title and a URL.
+Use it whenever the user asks to see a picture of something: search first, then
+open a blade with kind "image" and a url from these results, or kind "gallery"
+with several. Never make up an image link, and never guess one from memory:
+a link that was not in a tool result will not open.
+
+Search in plain English nouns: "golden retriever", "Eiffel Tower at night".`
+
+/**
+ * Real pictures for a brain that has no search of its own.
+ *
+ * A small local model asked to "show me a dog" has no way to find one, so it
+ * wrote a plausible link, and the face opened a blade around a broken image.
+ * Wikimedia Commons needs no account or key, and its thumbnails are ordinary
+ * image URLs the bridge's /img proxy can fetch.
+ */
+async function searchImages(query, count) {
+  const api = new URL('https://commons.wikimedia.org/w/api.php')
+  api.search = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    generator: 'search',
+    gsrsearch: `${query} filetype:bitmap`,
+    gsrnamespace: '6',
+    gsrlimit: String(Math.min(20, count * 3)),
+    prop: 'imageinfo',
+    iiprop: 'url|mime',
+    iiurlwidth: '1024',
+  }).toString()
+  const res = await fetch(api, {
+    // Wikimedia asks every client to identify itself.
+    headers: { 'User-Agent': 'JarvisFace/1.0 (https://github.com/erte-del/Jarvis)' },
+    signal: AbortSignal.timeout(8000),
+  })
+  if (!res.ok) throw new Error(`Wikimedia answered ${res.status}`)
+  const pages = Object.values((await res.json()).query?.pages ?? {})
+  return pages
+    .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
+    .map((p) => ({ title: String(p.title ?? '').replace(/^File:/, '').replace(/\.\w+$/, ''), info: p.imageinfo?.[0] }))
+    .filter(({ info }) => info && /^image\/(jpeg|png|webp|gif)$/.test(info.mime ?? ''))
+    .slice(0, count)
+    .map(({ title, info }) => ({ title, url: info.thumburl || info.url }))
+}
+
 /**
  * @param {(panel: object) => void} emit - pushes the panel to the browser
  * @param {(blade: object) => void} emitBlade - pushes a blade to the browser
+ * @param {{ checkMedia?: boolean }} [options] - checkMedia: test image links
+ *   before opening them, and add the image_search tool. Used for the
+ *   OpenJarvis brain, which has no search of its own and invents links.
  */
-export function displayServer(emit, emitBlade) {
+export function displayServer(emit, emitBlade, { checkMedia = false } = {}) {
   return createSdkMcpServer({
     name: 'jarvis',
     version: '1.0.0',
@@ -379,8 +428,8 @@ export function displayServer(emit, emitBlade) {
 
       tool('blade', BLADE_DESCRIPTION, bladeSchema, async (args) => {
         const kind = args.kind
-        const url = String(args.url ?? '').trim()
-        const images = Array.isArray(args.images) ? args.images.filter(Boolean) : []
+        let url = String(args.url ?? '').trim()
+        let images = Array.isArray(args.images) ? args.images.filter(Boolean) : []
 
         // Refused rather than emitted, for the same reason the display tool
         // refuses an empty body: a blade that opens onto nothing looks like the
@@ -393,6 +442,24 @@ export function displayServer(emit, emitBlade) {
         }
         if (['article', 'image', 'video', 'embed'].includes(kind) && !url) {
           return refuse(`Not opened: kind "${kind}" needs a \`url\`.`)
+        }
+
+        // A picture that does not load is a broken box on screen while the
+        // model describes something nobody can see. Checked before it opens,
+        // so the model hears it failed and can search or say so instead.
+        if (checkMedia && (kind === 'image' || kind === 'gallery')) {
+          const wanted = kind === 'image' ? [url] : images.slice(0, 8)
+          const reports = await Promise.all(wanted.map((u) => probeUrl(u)))
+          const good = wanted.filter((_, i) => reports[i].ok && reports[i].kind === 'image')
+          if (!good.length) {
+            const why = reports[0]?.status ? `it answered ${reports[0].status}` : reports[0]?.reason || 'it is not a picture'
+            return refuse(
+              `Not opened: ${wanted[0]} cannot be shown (${why}). Do not make up links. ` +
+                'Call image_search to find a real picture, or tell the user you could not find one.',
+            )
+          }
+          if (kind === 'image') url = good[0]
+          else images = good
         }
 
         const blade = {
@@ -422,6 +489,37 @@ export function displayServer(emit, emitBlade) {
           return { content: [{ type: 'text', text: JSON.stringify(report, null, 1) }] }
         },
       ),
+
+      ...(checkMedia
+        ? [
+            tool(
+              'image_search',
+              IMAGE_SEARCH_DESCRIPTION,
+              {
+                query: z.string().describe('What to find a picture of.'),
+                count: z
+                  .union([z.number(), z.string()])
+                  .optional()
+                  .catch(undefined)
+                  .describe('How many pictures, one to eight. Default four.'),
+              },
+              async (args) => {
+                const query = String(args.query ?? '').trim()
+                if (!query) return refuse('Nothing searched: give a query.')
+                const count = Math.min(8, Math.max(1, Math.round(Number(args.count)) || 4))
+                try {
+                  const found = await searchImages(query, count)
+                  if (!found.length) {
+                    return { content: [{ type: 'text', text: `No pictures found for "${query}". Tell the user.` }] }
+                  }
+                  return { content: [{ type: 'text', text: JSON.stringify(found, null, 1) }] }
+                } catch (err) {
+                  return refuse(`The picture search failed: ${err?.message ?? err}. Tell the user.`)
+                }
+              },
+            ),
+          ]
+        : []),
     ],
   })
 }
